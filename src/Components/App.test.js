@@ -1,6 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import App from './App';
+import { shallow, mount, render } from 'enzyme';
+
+const wrapper = shallow(<App />);
 
 test('renders learn react link', () => {
   const { getByText } = render(<App />);
