@@ -104,7 +104,6 @@ function App() {
   }
   const handleUpdate = (month: number, index: number) => {
     let initialData = [...data];
-    // data[month-1].monthData.splice(index,1);
       initialData[month-1].monthData.splice(index,1);
     console.log({ initialData });
     setData(initialData);
@@ -145,7 +144,13 @@ function App() {
               data.endBalance >= 0 ? 'positiveBalance' : 'negativeBalance'
             }
           >
-            Ending Balance: ${data.endBalance}
+            {/*Ending Balance: ${data.endBalance}*/}
+            Total cost ${data.monthData.reduce(function(acc,num){
+                return acc + num.cost;
+          },0)}
+          Ending Balance: ${data.begBalance-(data.monthData.reduce(function(acc,num){
+              return acc + num.cost;
+          },0))}
           </div>
         </section>
       ))}
