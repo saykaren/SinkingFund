@@ -1,8 +1,19 @@
 
+interface TestDataProps {
+    monthId: number,
+    monthName: string,
+    begBalance: number,
+    endBalance: number,
+    monthData: [{
+        title: string,
+        cost: number,
+    }],
+}
 const TestData =
     [
         {
-            month: 1,
+            monthId: 1,
+            monthName: 'January',
             begBalance: 1000,
             endBalance: 100,
             monthData: [
@@ -10,7 +21,8 @@ const TestData =
             ]
         },
         {
-            month: 2,
+            monthId: 2,
+            monthName: 'February',
             begBalance: 100,
             endBalance: 100,
             monthData: [
@@ -18,14 +30,16 @@ const TestData =
             ]
         },
         {
-            month: 3,
+            monthId: 3,
+            monthName: 'March',
             begBalance: 100,
-            endBalance: 100,
+            endBalance: -100,
             monthData: [
             ]
         },
         {
-            month: 4,
+            monthId: 4,
+            monthName: 'April',
             begBalance: 1000,
             endBalance: 100,
             monthData: [
@@ -35,14 +49,16 @@ const TestData =
             ]
         },
         {
-            month: 5,
+            monthId: 5,
+            monthName: 'May',
             begBalance: 1000,
             endBalance: 100,
             monthData: [
             ]
         },
         {
-            month: 6,
+            monthId: 6,
+            monthName: 'June',
             begBalance: 1000,
             endBalance: 100,
             monthData: [
@@ -50,7 +66,8 @@ const TestData =
             ]
         },
         {
-            month: 7,
+            monthId: 7,
+            monthName: 'July',
             begBalance: 1000,
             endBalance: 100,
             monthData: [
@@ -59,7 +76,8 @@ const TestData =
             ]
         },
         {
-            month: 8,
+            monthId: 8,
+            monthName: 'August',
             begBalance: 1000,
             endBalance: 100,
             monthData: [
@@ -67,21 +85,24 @@ const TestData =
             ]
         },
         {
-            month: 9,
+            monthId: 9,
+            monthName: 'September',
             begBalance: 1000,
             endBalance: 100,
             monthData: [
             ]
         },
         {
-            month: 10,
+            monthId: 10,
+            monthName: 'October',
             begBalance: 1000,
             endBalance: 100,
             monthData: [
             ]
         },
         {
-            month: 11,
+            monthId: 11,
+            monthName: 'November',
             begBalance: 1000,
             endBalance: 100,
             monthData: [
@@ -89,7 +110,8 @@ const TestData =
             ]
         },
         {
-            month: 12,
+            monthId: 12,
+            monthName: 'December',
             begBalance: 1000,
             endBalance: 100,
             monthData: [
