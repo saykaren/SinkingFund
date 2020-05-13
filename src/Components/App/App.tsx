@@ -98,6 +98,7 @@ function App() {
     },
   ]);
 
+  const [menu, setMenu] = useState(true);
   interface handleUpdateProps {
     month: number;
     index: number;
@@ -110,10 +111,15 @@ function App() {
   };
   return (
     <div className="App">
-      <header className="App-header">
-        Less Frequent Expenses (Happens less often than monthly) Items you
+      { (menu ===false) && <div onClick={()=>setMenu(true)} className='menuOpen'>&raquo;</div>}
+      {menu && <header className="App-header">
+        <div onClick={()=>setMenu(false)} className='menuOpen'>&laquo;</div>
+        Less Frequent Expenses<br/>
+        (Happens less often than monthly) <br/>
+        Items you
         cannot schedule monthly in your budget
-      </header>
+      </header>}
+      <main className='mainSection'>
       {data.map((data, index) => (
         <section
           key={index}
@@ -154,6 +160,7 @@ function App() {
           </div>
         </section>
       ))}
+      </main>
     </div>
   );
 }

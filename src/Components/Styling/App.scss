@@ -2,8 +2,22 @@
 
 .App {
   text-align: center;
-  background-color: $third_color;
+
   height: 100%;
+  display: flex;
+}
+
+button{
+  background-color: $third_color;
+  box-shadow: -2rem 2rem 2rem rgba(white, 0.2);
+  opacity: 0.95;
+  border-radius: 3px;
+  color: $font_color;
+  font-weight: bold;
+}
+
+html {
+  background-color: $third_color;
 }
 //
 //.App-logo {
@@ -16,13 +30,21 @@
 //    animation: App-logo-spin infinite 20s linear;
 //  }
 //}
+.menuOpen {
+  font-size: 5em;
+  z-index: 1;
+}
 
 .monthCard{
   background-color: $primary_color;
   border: 2px solid $third_color;
   color: $font_color;
   margin: 10px;
-  padding: 10px;
+  padding: 15px;
+  width: 330px;
+  box-shadow: -2rem 2rem 2rem rgba(white, 0.2);
+  opacity: 0.95;
+  border-radius: 5px;
 
 }
 .negativeMonthCard{
@@ -33,6 +55,11 @@
 
 }
 
+.mainSection{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
 .negativeBalance {
   color: black;
   font-weight: bold;
@@ -46,6 +73,12 @@
   //justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  position: absolute;
+  z-index: 1;
+  opacity: 78%;
+  max-width: 50%;
+  height: 100%;
+
 }
 //
 //.App-link {
