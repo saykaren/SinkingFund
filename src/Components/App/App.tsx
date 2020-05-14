@@ -127,6 +127,14 @@ function App() {
     console.log(`cost title ${costTitle} for ${costAmount} for the month of ${optionsState}`);
   }
 
+  const handleObjectInitialFundingUpdate = ()=>{
+    if(initialFunding > 0 ){
+      let object = [...data];
+      object[0].begBalance = initialFunding;
+      setData(object);
+    }
+  }
+
   return (
     <div className="App">
       {menu === false && (
@@ -157,6 +165,7 @@ function App() {
                   }
                   className="inputBox"
                 ></input>
+                <div onClick={(e)=>handleObjectInitialFundingUpdate()}>Submit</div>
                 {initialFunding}
               </label>
             </div>
@@ -177,7 +186,7 @@ function App() {
                   }
                   className="inputBox"
                 ></input>
-                <select id="month" value={optionsState} onChange={(e)=>setOptionsState(e.currentTarget.value)} required>
+                <select id="month" value={optionsState} onChange={(e)=>setOptionsState(e.currentTarget.value)} required className="inputBox">
                   <option value="January">SELECT ONE</option>
                   <option value="January">January</option>
                   <option value="February">February</option>
