@@ -96,6 +96,16 @@ function App() {
       endBalance: 100,
       monthData: [{ title: 'Vehicle Registration', cost: 240.55, monthIN: 12 }],
     },
+    {
+      monthId: 13,
+      monthName: 'July',
+      begBalance: 1000,
+      endBalance: 100,
+      monthData: [
+        { title: 'HOA Dues', cost: 189.5, monthIN: 7 },
+        { title: 'Amazon', cost: 120, monthIN: 7 },
+      ],
+    },
   ]);
 
   //Input section
@@ -127,10 +137,65 @@ function App() {
     console.log(`cost title ${costTitle} for ${costAmount} for the month of ${optionsState}`);
   }
 
+  // const updateBeginEnding = (object: objUpdate: number, objReference: number)=>{
+  //   object[objUpdate].begBalance = object[objReference].endBalance;
+  // }
+
   const handleObjectInitialFundingUpdate = ()=>{
     if(initialFunding > 0 ){
       let object = [...data];
+
+       const sumMonthlyCost = (monthIndex: number, begBalance: number)=>{
+       const totalCost= object[monthIndex].monthData.reduce(function(acc, num){
+          return acc + num.cost;
+        }, 0);
+        object[monthIndex].endBalance = begBalance-totalCost;
+      };
+
+      const januaryCosts = object[0].monthData.reduce(function(acc, num){
+        return acc + num.cost;
+      }, 0);
+
       object[0].begBalance = initialFunding;
+      object[0].endBalance = initialFunding-januaryCosts;
+
+      object[1].begBalance = object[0].endBalance;
+      sumMonthlyCost(1, object[1].begBalance);
+
+      object[2].begBalance = object[1].endBalance;
+      sumMonthlyCost(2, object[2].begBalance);
+
+      object[3].begBalance = object[2].endBalance;
+      sumMonthlyCost(3, object[3].begBalance);
+
+      object[4].begBalance = object[3].endBalance;
+      sumMonthlyCost(4, object[4].begBalance);
+
+      object[5].begBalance = object[4].endBalance;
+      sumMonthlyCost(5, object[5].begBalance);
+
+      object[6].begBalance = object[5].endBalance;
+      sumMonthlyCost(6, object[6].begBalance);
+
+      object[7].begBalance = object[6].endBalance;
+      sumMonthlyCost(7, object[7].begBalance);
+
+      object[8].begBalance = object[7].endBalance;
+      sumMonthlyCost(8, object[8].begBalance);
+
+      object[9].begBalance = object[8].endBalance;
+      sumMonthlyCost(9, object[9].begBalance);
+
+      object[10].begBalance = object[9].endBalance;
+      sumMonthlyCost(10, object[10].begBalance);
+
+      object[11].begBalance = object[10].endBalance;
+      sumMonthlyCost(11, object[11].begBalance);
+
+      object[12].begBalance = object[11].endBalance;
+      sumMonthlyCost(12, object[12].begBalance);
+
+
       setData(object);
     }
   }
@@ -166,7 +231,6 @@ function App() {
                   className="inputBox"
                 ></input>
                 <div onClick={(e)=>handleObjectInitialFundingUpdate()}>Submit</div>
-                {initialFunding}
               </label>
             </div>
             <div className="inputLabel">
@@ -243,12 +307,13 @@ function App() {
               Total cost $
               {data.monthData.reduce(function(acc, num) {
                 return acc + num.cost;
-              }, 0)}
-              Ending Balance: $
-              {data.begBalance -
-                data.monthData.reduce(function(acc, num) {
-                  return acc + num.cost;
-                }, 0)}
+              }, 0)}<br/>
+              Ending Balance: ${data.endBalance}
+              {/*Ending Balance: $*/}
+              {/*{data.begBalance -*/}
+              {/*  data.monthData.reduce(function(acc, num) {*/}
+              {/*    return acc + num.cost;*/}
+              {/*  }, 0)}*/}
             </div>
           </section>
         ))}
