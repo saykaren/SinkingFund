@@ -23,7 +23,7 @@ function App() {
       monthId: 3,
       monthName: 'March',
       begBalance: 100,
-      endBalance: -100,
+      endBalance: 100,
       monthData: [],
     },
     {
@@ -98,6 +98,13 @@ function App() {
     },
   ]);
 
+  //Input section
+  const [initialFunding, setInitialFunding] = useState(0);
+  const [costTitle, setCostTitle] = useState<string>('');
+  const [costAmount, setCostAmount] = useState<number>(0);
+
+  const [optionsState, setOptionsState] = useState<string>();
+
   const [menu, setMenu] = useState(true);
   interface handleUpdateProps {
     month: number;
@@ -105,61 +112,137 @@ function App() {
   }
   const handleUpdate = (month: number, index: number) => {
     let initialData = [...data];
-      initialData[month-1].monthData.splice(index,1);
+    initialData[month - 1].monthData.splice(index, 1);
     console.log({ initialData });
     setData(initialData);
   };
+
+  const handleInitialInput = (arg1: number) => {
+    if (arg1 > 0) {
+      setInitialFunding(arg1);
+    }
+  };
+
+  const handleAddition = ()=>{
+    console.log(`cost title ${costTitle} for ${costAmount} for the month of ${optionsState}`);
+  }
+
   return (
     <div className="App">
-      { (menu ===false) && <div onClick={()=>setMenu(true)} className='menuOpen'>&raquo;</div>}
-      {menu && <header className="App-header">
-        <div onClick={()=>setMenu(false)} className='menuOpen'>&laquo;</div>
-        Less Frequent Expenses<br/>
-        (Happens less often than monthly) <br/>
-        Items you
-        cannot schedule monthly in your budget
-      </header>}
-      <main className='mainSection'>
-      {data.map((data, index) => (
-        <section
-          key={index}
-          className={
-            data.endBalance >= 0 ? 'monthCard' : 'monthCard negativeMonthCard'
-          }
-        >
-          <h2>Month: {data.monthName}</h2>
-          <div
-            className={
-              data.begBalance >= 0 ? 'positiveBalance' : 'negativeBalance'
-            }
-          >
-            Beginning Balance: ${data.begBalance}
+      {menu === false && (
+        <div onClick={() => setMenu(true)} className="menuOpen">
+          &raquo;
+        </div>
+      )}
+      {menu && (
+        <header className="App-header">
+          <div onClick={() => setMenu(false)} className="menuOpen">
+            &laquo;
           </div>
-          {data.monthData.map((data, index) => (
-            <div key={index}>
-              {data.title} ${data.cost}
-              {data.monthIN && (
-                <button onClick={() => handleUpdate(data.monthIN, index)}>
-                  X
-                </button>
-              )}
+          <h2>
+            Less Frequent Expenses
+            <br />
+            (Happens less often than monthly) <br />
+            Items you cannot schedule monthly in your budget
+          </h2>
+          <section className="inputSection">
+            <div className="inputLabel">
+              <label className="inputSection">
+                Initial Funding
+                <input
+                  type="number"
+                  value={initialFunding}
+                  onChange={(e) =>
+                    handleInitialInput(parseFloat(e.currentTarget.value))
+                  }
+                  className="inputBox"
+                ></input>
+                {initialFunding}
+              </label>
             </div>
-          ))}
-          <div
+            <div className="inputLabel">
+              <label className="inputSection">
+                Expense
+                <input
+                  type="text"
+                  value={costTitle}
+                  onChange={(e) => setCostTitle(e.currentTarget.value)}
+                  className="inputBox"
+                ></input>
+                <input
+                  type="number"
+                  value={costAmount}
+                  onChange={(e) =>
+                    setCostAmount(parseFloat(e.currentTarget.value))
+                  }
+                  className="inputBox"
+                ></input>
+                <select id="month" value={optionsState} onChange={(e)=>setOptionsState(e.currentTarget.value)} required>
+                  <option value="January">SELECT ONE</option>
+                  <option value="January">January</option>
+                  <option value="February">February</option>
+                  <option value="March">March</option>
+                  <option value="April">April</option>
+                  <option value="May">May</option>
+                  <option value="June">June</option>
+                  <option value="July">July</option>
+                  <option value="August">August</option>
+                  <option value="September">September</option>
+                  <option value="October">October</option>
+                  <option value="November">November</option>
+                  <option value="December">December</option>
+                </select>
+                {costTitle}${costAmount}{optionsState}
+                <div className="submit" onClick={()=>handleAddition()}>Submit</div>
+              </label>
+            </div>
+          </section>
+        </header>
+      )}
+      <main className="mainSection">
+        {data.map((data, index) => (
+          <section
+            key={index}
             className={
-              data.endBalance >= 0 ? 'positiveBalance' : 'negativeBalance'
+              data.endBalance >= 0 ? 'monthCard' : 'monthCard negativeMonthCard'
             }
           >
-            {/*Ending Balance: ${data.endBalance}*/}
-            Total cost ${data.monthData.reduce(function(acc,num){
+            <h2>Month: {data.monthName}</h2>
+            <div
+              className={
+                data.endBalance >= 0 ? 'positiveBalance' : 'negativeBalance'
+              }
+            >
+              Beginning Balance: ${data.begBalance}
+            </div>
+            {data.monthData.map((data, index) => (
+              <div key={index}>
+                {data.title} ${data.cost}
+                {data.monthIN && (
+                  <button onClick={() => handleUpdate(data.monthIN, index)}>
+                    X
+                  </button>
+                )}
+              </div>
+            ))}
+            <div
+              className={
+                data.endBalance >= 0 ? 'positiveBalance' : 'negativeBalance'
+              }
+            >
+              {/*Ending Balance: ${data.endBalance}*/}
+              Total cost $
+              {data.monthData.reduce(function(acc, num) {
                 return acc + num.cost;
-          },0)}
-          Ending Balance: ${data.begBalance-(data.monthData.reduce(function(acc,num){
-              return acc + num.cost;
-          },0))}
-          </div>
-        </section>
-      ))}
+              }, 0)}
+              Ending Balance: $
+              {data.begBalance -
+                data.monthData.reduce(function(acc, num) {
+                  return acc + num.cost;
+                }, 0)}
+            </div>
+          </section>
+        ))}
       </main>
     </div>
   );

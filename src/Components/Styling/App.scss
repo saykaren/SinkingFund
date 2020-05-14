@@ -19,6 +19,22 @@ button{
 html {
   background-color: $third_color;
 }
+
+.inputBox {
+  padding: 5px;
+  margin: 7px;
+}
+
+.inputLabel{
+  text-align: left;
+  padding: 10px;
+  margin-left: 20px;
+}
+
+.inputSection{
+  display: flex;
+  flex-direction: column;
+}
 //
 //.App-logo {
 //  height: 40vmin;
