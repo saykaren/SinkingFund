@@ -156,44 +156,55 @@ function App() {
         return acc + num.cost;
       }, 0);
 
+      //January settings
       object[0].begBalance = initialFunding;
       object[0].endBalance = initialFunding-januaryCosts;
 
-      object[1].begBalance = object[0].endBalance;
-      sumMonthlyCost(1, object[1].begBalance);
 
-      object[2].begBalance = object[1].endBalance;
-      sumMonthlyCost(2, object[2].begBalance);
+      object.map((number, index)=>{
+        if(number.monthId !== 1){
+           /// 1 index for February
+          object[index].begBalance = object[index-1].endBalance;
+          sumMonthlyCost(index, object[index].begBalance);
+        }
+      });
 
-      object[3].begBalance = object[2].endBalance;
-      sumMonthlyCost(3, object[3].begBalance);
 
-      object[4].begBalance = object[3].endBalance;
-      sumMonthlyCost(4, object[4].begBalance);
-
-      object[5].begBalance = object[4].endBalance;
-      sumMonthlyCost(5, object[5].begBalance);
-
-      object[6].begBalance = object[5].endBalance;
-      sumMonthlyCost(6, object[6].begBalance);
-
-      object[7].begBalance = object[6].endBalance;
-      sumMonthlyCost(7, object[7].begBalance);
-
-      object[8].begBalance = object[7].endBalance;
-      sumMonthlyCost(8, object[8].begBalance);
-
-      object[9].begBalance = object[8].endBalance;
-      sumMonthlyCost(9, object[9].begBalance);
-
-      object[10].begBalance = object[9].endBalance;
-      sumMonthlyCost(10, object[10].begBalance);
-
-      object[11].begBalance = object[10].endBalance;
-      sumMonthlyCost(11, object[11].begBalance);
-
-      object[12].begBalance = object[11].endBalance;
-      sumMonthlyCost(12, object[12].begBalance);
+      // object[1].begBalance = object[0].endBalance;
+      // sumMonthlyCost(1, object[1].begBalance);
+      //
+      // object[2].begBalance = object[1].endBalance;
+      // sumMonthlyCost(2, object[2].begBalance);
+      //
+      // object[3].begBalance = object[2].endBalance;
+      // sumMonthlyCost(3, object[3].begBalance);
+      //
+      // object[4].begBalance = object[3].endBalance;
+      // sumMonthlyCost(4, object[4].begBalance);
+      //
+      // object[5].begBalance = object[4].endBalance;
+      // sumMonthlyCost(5, object[5].begBalance);
+      //
+      // object[6].begBalance = object[5].endBalance;
+      // sumMonthlyCost(6, object[6].begBalance);
+      //
+      // object[7].begBalance = object[6].endBalance;
+      // sumMonthlyCost(7, object[7].begBalance);
+      //
+      // object[8].begBalance = object[7].endBalance;
+      // sumMonthlyCost(8, object[8].begBalance);
+      //
+      // object[9].begBalance = object[8].endBalance;
+      // sumMonthlyCost(9, object[9].begBalance);
+      //
+      // object[10].begBalance = object[9].endBalance;
+      // sumMonthlyCost(10, object[10].begBalance);
+      //
+      // object[11].begBalance = object[10].endBalance;
+      // sumMonthlyCost(11, object[11].begBalance);
+      //
+      // object[12].begBalance = object[11].endBalance;
+      // sumMonthlyCost(12, object[12].begBalance);
 
 
       setData(object);
