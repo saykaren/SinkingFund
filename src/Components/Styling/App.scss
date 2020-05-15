@@ -6,6 +6,11 @@
   display: flex;
 }
 
+.appTitle {
+  text-shadow: 0px 4px 4px rgba(255, 249, 249, 0.25);
+  color: $secondary_color;
+}
+
 button{
   background-color: $third_color;
   box-shadow: -2rem 2rem 2rem rgba(white, 0.2);
@@ -13,8 +18,46 @@ button{
   border-radius: 3px;
   color: $font_color;
   font-weight: bold;
+
 }
 
+.cardTitle{
+ background-color: $third_color;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: -10px;
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
+}
+
+//.monthInputs, .monthExpenses, .monthEndBalance {
+//  margin-top: 10px;
+//  background-color: $third_color;
+//  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+//}
+
+.monthExpenses {
+  margin-top: 10px;
+  background-color: $third_color;
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  padding: 10px;
+}
+
+.monthInputs, .monthEndBalance {
+  padding: 5px;
+}
+
+.monthInputs {
+  background-color: $secondary_color;
+  opacity: .95;
+  color: $primary_color;
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
+}
+
+#month {
+  height: 30px;
+}
 html {
   background-color: $third_color;
 }
@@ -22,6 +65,8 @@ html {
 .inputBox {
   padding: 5px;
   margin: 7px;
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
 }
 
 .inputLabel{
@@ -48,6 +93,7 @@ html {
 .menuOpen {
   font-size: 5em;
   z-index: 1;
+  color: $secondary_color;
 }
 
 .monthCard{
@@ -55,12 +101,14 @@ html {
   border: 2px solid $third_color;
   color: $font_color;
   margin: 10px;
-  padding: 15px;
-  width: 330px;
+  padding: 20px;
+  width: 16em;
   box-shadow: -2rem 2rem 2rem rgba(white, 0.2);
   opacity: 0.95;
   border-radius: 5px;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .negativeMonthCard{
   background-color: $negative_color;

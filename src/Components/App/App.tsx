@@ -93,7 +93,7 @@ function App() {
       monthId: 12,
       monthName: 'December',
       begBalance: 2307.25,
-      endBalance: 2766.70,
+      endBalance: 2766.7,
       monthData: [{ title: 'Vehicle Registration', cost: 240.55, monthIN: 12 }],
     },
   ]);
@@ -124,11 +124,19 @@ function App() {
     }
   };
 
-  const handleAddition = (costTitle: string, costAmount: number, optionsState: number) => {
+  const handleAdditionExpense = (
+    costTitle: string,
+    costAmount: number,
+    optionsState: number,
+  ) => {
     let object = [...data];
     //add to december index is number-1
-    object[optionsState-1].monthData.push({ title: costTitle, cost: costAmount, monthIN: optionsState });
-   console.log({costTitle, costAmount, optionsState});
+    object[optionsState - 1].monthData.push({
+      title: costTitle,
+      cost: costAmount,
+      monthIN: optionsState,
+    });
+    console.log({ costTitle, costAmount, optionsState });
     handleUpdateDataState();
   };
 
@@ -180,9 +188,7 @@ function App() {
           <div onClick={() => setMenu(false)} className="menuOpen">
             &laquo;
           </div>
-          <h2>
-            Sinking Fund
-          </h2>
+          <h2 className="appTitle">Sinking Fund</h2>
           <section className="inputSection">
             <div className="inputLabel">
               <label className="inputSection">
@@ -195,7 +201,7 @@ function App() {
                   }
                   className="inputBox"
                 ></input>
-                <div onClick={(e) => handleUpdateDataState()}>Submit</div>
+                <button onClick={(e) => handleUpdateDataState()}>Submit</button>
               </label>
             </div>
             <div className="inputLabel">
@@ -209,7 +215,7 @@ function App() {
                   }
                   className="inputBox"
                 ></input>
-                <div onClick={(e) => handleUpdateDataState()}>Submit</div>
+                <button onClick={(e) => handleUpdateDataState()}>Submit</button>
               </label>
             </div>
             <div className="inputLabel">
@@ -250,11 +256,20 @@ function App() {
                   <option value={11}>November</option>
                   <option value={12}>December</option>
                 </select>
-                {costTitle}${costAmount}
-                {optionsState}
-                {(optionsState !== undefined) && <div className="submit" onClick={() => handleAddition(costTitle, costAmount, parseInt(optionsState))}>
-                  Submit
-                </div>}
+                {optionsState !== undefined && costAmount > 0 && (
+                  <div
+                    className="submit"
+                    onClick={() =>
+                      handleAdditionExpense(
+                        costTitle,
+                        costAmount,
+                        parseInt(optionsState),
+                      )
+                    }
+                  >
+                    Submit
+                  </div>
+                )}
               </label>
             </div>
           </section>
@@ -264,32 +279,47 @@ function App() {
         {data.map((data, index) => (
           <section
             key={index}
-            className={
-              data.endBalance >= 0 ? 'monthCard' : 'monthCard negativeMonthCard'
-            }
+            className='monthCard'
           >
-            <h2>Month: {data.monthName}</h2>
+            <h2 className="cardTitle">{data.monthName}</h2>
             <div
-              className={
-                data.endBalance >= 0 ? 'positiveBalance' : 'negativeBalance'
-              }
+                 className={
+                   data.begBalance >= 0
+                       ? 'positiveBalance monthInputs'
+                       : 'negativeBalance monthInputs negativeMonthCard'
+                 }
             >
-              Beginning Balance: ${data.begBalance.toFixed(2)}
-            </div>
-            <div>Monthly Contribution: ${monthlyContribution}</div>
-            {data.monthData.map((data, index) => (
-              <div key={index}>
-                {data.title} ${data.cost}
-                {data.monthIN && (
-                  <button onClick={() => handleUpdate(data.monthIN, index)}>
-                    X
-                  </button>
-                )}
+              <div
+                className={
+                  data.endBalance >= 0 ? 'positiveBalance' : 'negativeBalance'
+                }
+                 >
+                Beginning Balance: ${data.begBalance.toFixed(2)}
               </div>
-            ))}
+              <div>
+                Monthly Contribution: ${monthlyContribution}{' '}
+                <button onClick={() => alert('add money')}>&#43;</button>
+              </div>
+            </div>
+            {data.monthData.length > 0 && (
+              <div className="monthExpenses">
+                {data.monthData.map((data, index) => (
+                  <div key={index}>
+                    {data.title} ${data.cost}
+                    {data.monthIN && (
+                      <button onClick={() => handleUpdate(data.monthIN, index)}>
+                        X
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
             <div
               className={
-                data.endBalance >= 0 ? 'positiveBalance' : 'negativeBalance'
+                data.endBalance >= 0
+                  ? 'positiveBalance monthEndBalance'
+                  : 'negativeBalance monthEndBalance negativeMonthCard'
               }
             >
               {/*Total cost $*/}
