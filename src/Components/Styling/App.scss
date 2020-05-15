@@ -2,7 +2,6 @@
 
 .App {
   text-align: center;
-
   height: 100%;
   display: flex;
 }
@@ -89,7 +88,7 @@ html {
   //justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-  position: absolute;
+  position: sticky;
   z-index: 1;
   opacity: 78%;
   max-width: 50%;

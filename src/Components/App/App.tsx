@@ -96,24 +96,15 @@ function App() {
       endBalance: 100,
       monthData: [{ title: 'Vehicle Registration', cost: 240.55, monthIN: 12 }],
     },
-    {
-      monthId: 13,
-      monthName: 'July',
-      begBalance: 1000,
-      endBalance: 100,
-      monthData: [
-        { title: 'HOA Dues', cost: 189.5, monthIN: 7 },
-        { title: 'Amazon', cost: 120, monthIN: 7 },
-      ],
-    },
   ]);
 
   //Input section
-  const [initialFunding, setInitialFunding] = useState(0);
+  const [initialFunding, setInitialFunding] = useState(1000);
   const [costTitle, setCostTitle] = useState<string>('');
   const [costAmount, setCostAmount] = useState<number>(0);
 
   const [optionsState, setOptionsState] = useState<string>();
+  const [monthlyContribution, setMonthlyContribution] = useState<number>(100);
 
   const [menu, setMenu] = useState(true);
   interface handleUpdateProps {
@@ -123,8 +114,8 @@ function App() {
   const handleUpdate = (month: number, index: number) => {
     let initialData = [...data];
     initialData[month - 1].monthData.splice(index, 1);
-    console.log({ initialData });
     setData(initialData);
+    handleUpdateDataState();
   };
 
   const handleInitialInput = (arg1: number) => {
@@ -133,83 +124,49 @@ function App() {
     }
   };
 
-  const handleAddition = ()=>{
-    console.log(`cost title ${costTitle} for ${costAmount} for the month of ${optionsState}`);
-  }
+  const handleAddition = () => {
+    let object = [...data];
+    //add to december index is number-1
+    object[11].monthData.push({ title: 'Testing', cost: 777.0, monthIN: 12 });
 
-  // const updateBeginEnding = (object: objUpdate: number, objReference: number)=>{
-  //   object[objUpdate].begBalance = object[objReference].endBalance;
-  // }
+    handleUpdateDataState();
+  };
 
-  const handleObjectInitialFundingUpdate = ()=>{
-    if(initialFunding > 0 ){
+  const handleUpdateDataState = () => {
+    if (initialFunding > 0 && monthlyContribution > 0) {
       let object = [...data];
 
-       const sumMonthlyCost = (monthIndex: number, begBalance: number)=>{
-       const totalCost= object[monthIndex].monthData.reduce(function(acc, num){
+      const sumMonthlyCost = (monthIndex: number, begBalance: number) => {
+        const totalCost = object[monthIndex].monthData.reduce(function(
+          acc,
+          num,
+        ) {
           return acc + num.cost;
-        }, 0);
-        object[monthIndex].endBalance = begBalance-totalCost;
+        },
+        0);
+        object[monthIndex].endBalance =
+          begBalance + monthlyContribution - totalCost;
       };
 
-      const januaryCosts = object[0].monthData.reduce(function(acc, num){
+      const januaryCosts = object[0].monthData.reduce(function(acc, num) {
         return acc + num.cost;
       }, 0);
 
       //January settings
       object[0].begBalance = initialFunding;
-      object[0].endBalance = initialFunding-januaryCosts;
+      object[0].endBalance =
+        initialFunding + monthlyContribution - januaryCosts;
 
-
-      object.map((number, index)=>{
-        if(number.monthId !== 1){
-           /// 1 index for February
-          object[index].begBalance = object[index-1].endBalance;
+      object.map((number, index) => {
+        if (number.monthId !== 1) {
+          /// 1 index for February
+          object[index].begBalance = object[index - 1].endBalance;
           sumMonthlyCost(index, object[index].begBalance);
         }
       });
-
-
-      // object[1].begBalance = object[0].endBalance;
-      // sumMonthlyCost(1, object[1].begBalance);
-      //
-      // object[2].begBalance = object[1].endBalance;
-      // sumMonthlyCost(2, object[2].begBalance);
-      //
-      // object[3].begBalance = object[2].endBalance;
-      // sumMonthlyCost(3, object[3].begBalance);
-      //
-      // object[4].begBalance = object[3].endBalance;
-      // sumMonthlyCost(4, object[4].begBalance);
-      //
-      // object[5].begBalance = object[4].endBalance;
-      // sumMonthlyCost(5, object[5].begBalance);
-      //
-      // object[6].begBalance = object[5].endBalance;
-      // sumMonthlyCost(6, object[6].begBalance);
-      //
-      // object[7].begBalance = object[6].endBalance;
-      // sumMonthlyCost(7, object[7].begBalance);
-      //
-      // object[8].begBalance = object[7].endBalance;
-      // sumMonthlyCost(8, object[8].begBalance);
-      //
-      // object[9].begBalance = object[8].endBalance;
-      // sumMonthlyCost(9, object[9].begBalance);
-      //
-      // object[10].begBalance = object[9].endBalance;
-      // sumMonthlyCost(10, object[10].begBalance);
-      //
-      // object[11].begBalance = object[10].endBalance;
-      // sumMonthlyCost(11, object[11].begBalance);
-      //
-      // object[12].begBalance = object[11].endBalance;
-      // sumMonthlyCost(12, object[12].begBalance);
-
-
       setData(object);
     }
-  }
+  };
 
   return (
     <div className="App">
@@ -224,10 +181,7 @@ function App() {
             &laquo;
           </div>
           <h2>
-            Less Frequent Expenses
-            <br />
-            (Happens less often than monthly) <br />
-            Items you cannot schedule monthly in your budget
+            Sinking Fund
           </h2>
           <section className="inputSection">
             <div className="inputLabel">
@@ -241,7 +195,21 @@ function App() {
                   }
                   className="inputBox"
                 ></input>
-                <div onClick={(e)=>handleObjectInitialFundingUpdate()}>Submit</div>
+                <div onClick={(e) => handleUpdateDataState()}>Submit</div>
+              </label>
+            </div>
+            <div className="inputLabel">
+              <label className="inputSection">
+                Monthly Contribution
+                <input
+                  type="number"
+                  value={monthlyContribution}
+                  onChange={(e) =>
+                    setMonthlyContribution(parseFloat(e.currentTarget.value))
+                  }
+                  className="inputBox"
+                ></input>
+                <div onClick={(e) => handleUpdateDataState()}>Submit</div>
               </label>
             </div>
             <div className="inputLabel">
@@ -261,7 +229,13 @@ function App() {
                   }
                   className="inputBox"
                 ></input>
-                <select id="month" value={optionsState} onChange={(e)=>setOptionsState(e.currentTarget.value)} required className="inputBox">
+                <select
+                  id="month"
+                  value={optionsState}
+                  onChange={(e) => setOptionsState(e.currentTarget.value)}
+                  required
+                  className="inputBox"
+                >
                   <option value="January">SELECT ONE</option>
                   <option value="January">January</option>
                   <option value="February">February</option>
@@ -276,8 +250,11 @@ function App() {
                   <option value="November">November</option>
                   <option value="December">December</option>
                 </select>
-                {costTitle}${costAmount}{optionsState}
-                <div className="submit" onClick={()=>handleAddition()}>Submit</div>
+                {costTitle}${costAmount}
+                {optionsState}
+                <div className="submit" onClick={() => handleAddition()}>
+                  Submit
+                </div>
               </label>
             </div>
           </section>
@@ -297,8 +274,9 @@ function App() {
                 data.endBalance >= 0 ? 'positiveBalance' : 'negativeBalance'
               }
             >
-              Beginning Balance: ${data.begBalance}
+              Beginning Balance: ${data.begBalance.toFixed(2)}
             </div>
+            <div>Monthly Contribution: ${monthlyContribution}</div>
             {data.monthData.map((data, index) => (
               <div key={index}>
                 {data.title} ${data.cost}
@@ -314,17 +292,11 @@ function App() {
                 data.endBalance >= 0 ? 'positiveBalance' : 'negativeBalance'
               }
             >
-              {/*Ending Balance: ${data.endBalance}*/}
-              Total cost $
-              {data.monthData.reduce(function(acc, num) {
-                return acc + num.cost;
-              }, 0)}<br/>
-              Ending Balance: ${data.endBalance}
-              {/*Ending Balance: $*/}
-              {/*{data.begBalance -*/}
-              {/*  data.monthData.reduce(function(acc, num) {*/}
-              {/*    return acc + num.cost;*/}
-              {/*  }, 0)}*/}
+              {/*Total cost $*/}
+              {/*{data.monthData.reduce(function(acc, num) {*/}
+              {/*  return acc + num.cost;*/}
+              {/*}, 0)}<br/>*/}
+              Ending Balance: ${data.endBalance.toFixed(2)}
             </div>
           </section>
         ))}
