@@ -71,8 +71,6 @@ const App = () => {
       contribution: contributionAmount,
       monthIN: optionsConstState,
     });
-    console.log({ contributionTitle, contributionAmount, optionsConstState });
-    console.log({ data });
     handleUpdateDataState();
   };
 
