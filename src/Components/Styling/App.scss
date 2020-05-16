@@ -54,8 +54,7 @@ button{
   background-color: $secondary_color;
   opacity: .95;
   color: $font_color;
-  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 3px;
+  //box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 #month {
@@ -110,10 +109,10 @@ html {
   width: 16em;
   box-shadow: -2rem 2rem 2rem rgba(white, 0.2);
   opacity: 0.95;
-  border-radius: 5px;
+  //border-radius: 5px;
   display: flex;
   flex-direction: column;
-  justify-content: inherit;
+  //justify-content: inherit;
 }
 .negativeBalance {
   background-color: $negative_color;

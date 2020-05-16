@@ -119,6 +119,119 @@ export const TestData =
         },
     ];
 
+// export interface TestDataProps {
+//     monthId: number;
+//     monthName: string;
+//     begBalance: number;
+//     endBalance: number;
+//     monthData: [
+//         {
+//             title?: string;
+//             cost?: number;
+//             monthIn?: number;
+//         },
+//     ];
+//     monthContributions: [{ title: string; cost: number; monthIN: number }];
+// }
+// export const BlankData: [TestDataProps] = [
+//     {
+//         monthId: 1,
+//         monthName: 'January',
+//         begBalance: 0,
+//         endBalance: 0,
+//         monthData: [{}],
+//         monthContributions: [{}],
+//     },
+//     {
+//         monthId: 2,
+//         monthName: 'February',
+//         begBalance: 0,
+//         endBalance: 0,
+//         monthData: [{}],
+//         monthContributions: [{}],
+//     },
+//     {
+//         monthId: 3,
+//         monthName: 'March',
+//         begBalance: 0,
+//         endBalance: 0,
+//         monthData: [{}],
+//         monthContributions: [{}],
+//     },
+//     {
+//         monthId: 4,
+//         monthName: 'April',
+//         begBalance: 0,
+//         endBalance: 0,
+//         monthData: [{}],
+//         monthContributions: [{}],
+//     },
+//     {
+//         monthId: 5,
+//         monthName: 'May',
+//         begBalance: 0,
+//         endBalance: 0,
+//         monthData: [{}],
+//         monthContributions: [{}],
+//     },
+//     {
+//         monthId: 6,
+//         monthName: 'June',
+//         begBalance: 0,
+//         endBalance: 0,
+//         monthData: [{}],
+//         monthContributions: [{}],
+//     },
+//     {
+//         monthId: 7,
+//         monthName: 'July',
+//         begBalance: 0,
+//         endBalance: 0,
+//         monthData: [{}],
+//         monthContributions: [{}],
+//     },
+//     {
+//         monthId: 8,
+//         monthName: 'August',
+//         begBalance: 0,
+//         endBalance: 0,
+//         monthData: [{}],
+//         monthContributions: [{}],
+//     },
+//     {
+//         monthId: 9,
+//         monthName: 'September',
+//         begBalance: 0,
+//         endBalance: 0,
+//         monthData: [{}],
+//         monthContributions: [{}],
+//     },
+//     {
+//         monthId: 10,
+//         monthName: 'October',
+//         begBalance: 0,
+//         endBalance: 0,
+//         monthData: [{}],
+//         monthContributions: [{}],
+//     },
+//     {
+//         monthId: 11,
+//         monthName: 'November',
+//         begBalance: 0,
+//         endBalance: 0,
+//         monthData: [{}],
+//         monthContributions: [{}],
+//     },
+//     {
+//         monthId: 12,
+//         monthName: 'December',
+//         begBalance: 0,
+//         endBalance: 0,
+//         monthData: [{}],
+//         monthContributions: [{}],
+//     },
+// ];
+
 export default TestData;
 
 // {title: "testing", contribution: 100, monthIN: 1}

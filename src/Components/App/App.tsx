@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import '../Styling/App.scss';
 import TestData from './TestData';
-// import TestDataProps from './TestData';
+
 
 const App = () => {
   const [data, setData] = useState(TestData);
+
+  //issue with blank data is it doesn't have interface for array details
 
   //Input section
   const [initialFunding, setInitialFunding] = useState(4000);
@@ -51,6 +53,13 @@ const App = () => {
   ) => {
     let object = [...data];
     //add to december index is number-1
+    // if(costTitle.length >0 && costAmount >0 && optionsState>0){
+    //   object[optionsState - 1].monthData.push({
+    //     title: costTitle,
+    //     cost: costAmount,
+    //     monthIN: optionsState,
+    //   });
+    // }
     object[optionsState - 1].monthData.push({
       title: costTitle,
       cost: costAmount,
@@ -153,7 +162,7 @@ const App = () => {
                   }
                   className="inputBox"
                 ></input>
-                <button onClick={(e) => handleUpdateDataState()}>Submit</button>
+                {(initialFunding > 0) && <button onClick={(e) => handleUpdateDataState()}>Submit</button>}
               </label>
             </div>
             <div className="inputLabel">
@@ -167,7 +176,7 @@ const App = () => {
                   }
                   className="inputBox"
                 ></input>
-                <button onClick={(e) => handleUpdateDataState()}>Submit</button>
+                {(monthlyContribution > 0) && <button onClick={(e) => handleUpdateDataState()}>Submit</button>}
               </label>
             </div>
             <div className="inputLabel">
@@ -210,7 +219,7 @@ const App = () => {
                   <option value={12}>December</option>
                 </select>
                 {optionsState !== undefined && costAmount > 0 && (
-                  <div
+                  <button
                     className="submit"
                     onClick={() =>
                       handleAdditionExpense(
@@ -221,7 +230,7 @@ const App = () => {
                     }
                   >
                     Submit
-                  </div>
+                  </button>
                 )}
               </label>
             </div>
@@ -267,7 +276,7 @@ const App = () => {
                   <option value={12}>December</option>
                 </select>
                 {optionsConstState !== undefined && contributionAmount > 0 && (
-                  <div
+                  <button
                     className="submit"
                     onClick={() =>
                       handleAdditionContribution(
@@ -278,7 +287,7 @@ const App = () => {
                     }
                   >
                     Submit
-                  </div>
+                  </button>
                 )}
               </label>
             </div>
