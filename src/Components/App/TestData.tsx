@@ -7,7 +7,9 @@ export interface TestDataProps {
     monthData: [{
         title: string,
         cost: number,
+        monthIn: number,
     }],
+    monthContributions?: [{title: string, cost: number, monthIN: number}]
 }
 const TestData =
     [
