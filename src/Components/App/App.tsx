@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../Styling/App.scss';
 import TestData from './TestData';
-
+import Footer from './Footer';
 
 const App = () => {
   const [data, setData] = useState(TestData);
@@ -52,20 +52,11 @@ const App = () => {
     optionsState: number,
   ) => {
     let object = [...data];
-    //add to december index is number-1
-    // if(costTitle.length >0 && costAmount >0 && optionsState>0){
-    //   object[optionsState - 1].monthData.push({
-    //     title: costTitle,
-    //     cost: costAmount,
-    //     monthIN: optionsState,
-    //   });
-    // }
     object[optionsState - 1].monthData.push({
       title: costTitle,
       cost: costAmount,
       monthIN: optionsState,
     });
-    console.log({ costTitle, costAmount, optionsState });
     handleUpdateDataState();
   };
 
@@ -75,7 +66,6 @@ const App = () => {
     optionsConstState: number,
   ) => {
     let object = [...data];
-    //add to december index is number-1
     object[optionsConstState - 1].monthContributions.push({
       title: contributionTitle,
       contribution: contributionAmount,
@@ -138,228 +128,241 @@ const App = () => {
   };
 
   return (
-    <div className="App">
-      {menu === false && (
-        <div onClick={() => setMenu(true)} className="menuOpen">
-          &raquo;
-        </div>
-      )}
-      {menu && (
-        <header className="App-header">
-          <div onClick={() => setMenu(false)} className="menuOpen">
-            &laquo;
+    <section>
+      <div className="App">
+        {menu === false && (
+          <div onClick={() => setMenu(true)} className="menuOpen">
+            &raquo;
           </div>
-          <h2 className="appTitle">Sinking Fund</h2>
-          <section className="inputSection">
-            <div className="inputLabel">
-              <label className="inputSection">
-                Initial Funding
-                <input
-                  type="number"
-                  value={initialFunding}
-                  onChange={(e) =>
-                    handleInitialInput(parseFloat(e.currentTarget.value))
-                  }
-                  className="inputBox"
-                ></input>
-                {(initialFunding > 0) && <button onClick={(e) => handleUpdateDataState()}>Submit</button>}
-              </label>
+        )}
+        {menu && (
+          <header className="App-header">
+            <div onClick={() => setMenu(false)} className="menuOpen">
+              &laquo;
             </div>
-            <div className="inputLabel">
-              <label className="inputSection">
-                Monthly Contribution
-                <input
-                  type="number"
-                  value={monthlyContribution}
-                  onChange={(e) =>
-                    setMonthlyContribution(parseFloat(e.currentTarget.value))
-                  }
-                  className="inputBox"
-                ></input>
-                {(monthlyContribution > 0) && <button onClick={(e) => handleUpdateDataState()}>Submit</button>}
-              </label>
-            </div>
-            <div className="inputLabel">
-              <label className="inputSection">
-                Expense:
-                <input
-                  type="text"
-                  value={costTitle}
-                  onChange={(e) => setCostTitle(e.currentTarget.value)}
-                  placeholder="Name of Expense"
-                  className="inputBox"
-                ></input>
-                <input
-                  type="number"
-                  value={costAmount}
-                  onChange={(e) =>
-                    setCostAmount(parseFloat(e.currentTarget.value))
-                  }
-                  className="inputBox"
-                ></input>
-                <select
-                  id="month"
-                  value={optionsState}
-                  onChange={(e) => setOptionsState(e.currentTarget.value)}
-                  required
-                  className="inputBox"
-                >
-                  <option value={0}>SELECT ONE</option>
-                  <option value={1}>January</option>
-                  <option value={2}>February</option>
-                  <option value={3}>March</option>
-                  <option value={4}>April</option>
-                  <option value={5}>May</option>
-                  <option value={6}>June</option>
-                  <option value={7}>July</option>
-                  <option value={8}>August</option>
-                  <option value={9}>September</option>
-                  <option value={10}>October</option>
-                  <option value={11}>November</option>
-                  <option value={12}>December</option>
-                </select>
-                {optionsState !== undefined && costAmount > 0 && (
-                  <button
-                    className="submit"
-                    onClick={() =>
-                      handleAdditionExpense(
-                        costTitle,
-                        costAmount,
-                        parseInt(optionsState),
-                      )
+            <h2 className="appTitle">Sinking Fund</h2>
+            <section className="inputSection">
+              <div className="inputLabel">
+                <label className="inputSection">
+                  Initial Funding
+                  <input
+                    type="number"
+                    value={initialFunding}
+                    onChange={(e) =>
+                      handleInitialInput(parseFloat(e.currentTarget.value))
                     }
-                  >
-                    Submit
-                  </button>
-                )}
-              </label>
-            </div>
-            <div className="inputLabel">
-              <label className="inputSection">
-                Single Contribution:
-                <input
-                  type="text"
-                  value={contributionTitle}
-                  onChange={(e) => setContributionTitle(e.currentTarget.value)}
-                  placeholder="Name of Contribution"
-                  className="inputBox"
-                ></input>
-                <input
-                  type="number"
-                  value={contributionAmount}
-                  onChange={(e) =>
-                    setContributionAmount(parseFloat(e.currentTarget.value))
-                  }
-                  className="inputBox"
-                ></input>
-                <select
-                  id="month"
-                  value={optionsConstState}
-                  onChange={(e) =>
-                    setOptionsConstState(parseInt(e.currentTarget.value))
-                  }
-                  required
-                  className="inputBox"
-                >
-                  <option value={0}>SELECT ONE</option>
-                  <option value={1}>January</option>
-                  <option value={2}>February</option>
-                  <option value={3}>March</option>
-                  <option value={4}>April</option>
-                  <option value={5}>May</option>
-                  <option value={6}>June</option>
-                  <option value={7}>July</option>
-                  <option value={8}>August</option>
-                  <option value={9}>September</option>
-                  <option value={10}>October</option>
-                  <option value={11}>November</option>
-                  <option value={12}>December</option>
-                </select>
-                {optionsConstState !== undefined && contributionAmount > 0 && (
-                  <button
-                    className="submit"
-                    onClick={() =>
-                      handleAdditionContribution(
-                        contributionTitle,
-                        contributionAmount,
-                        optionsConstState,
-                      )
+                    className="inputBox"
+                  ></input>
+                  {initialFunding > 0 && (
+                    <button onClick={(e) => handleUpdateDataState()}>
+                      Submit
+                    </button>
+                  )}
+                </label>
+              </div>
+              <div className="inputLabel">
+                <label className="inputSection">
+                  Monthly Contribution
+                  <input
+                    type="number"
+                    value={monthlyContribution}
+                    onChange={(e) =>
+                      setMonthlyContribution(parseFloat(e.currentTarget.value))
                     }
+                    className="inputBox"
+                  ></input>
+                  {monthlyContribution > 0 && (
+                    <button onClick={(e) => handleUpdateDataState()}>
+                      Submit
+                    </button>
+                  )}
+                </label>
+              </div>
+              <div className="inputLabel">
+                <label className="inputSection">
+                  Expense:
+                  <input
+                    type="text"
+                    value={costTitle}
+                    onChange={(e) => setCostTitle(e.currentTarget.value)}
+                    placeholder="Name of Expense"
+                    className="inputBox"
+                  ></input>
+                  <input
+                    type="number"
+                    value={costAmount}
+                    onChange={(e) =>
+                      setCostAmount(parseFloat(e.currentTarget.value))
+                    }
+                    className="inputBox"
+                  ></input>
+                  <select
+                    id="month"
+                    value={optionsState}
+                    onChange={(e) => setOptionsState(e.currentTarget.value)}
+                    required
+                    className="inputBox"
                   >
-                    Submit
-                  </button>
-                )}
-              </label>
-            </div>
-          </section>
-        </header>
-      )}
-      <main className="mainSection">
-        {data.map((data, index) => (
-          <section key={index} className="monthCard">
-            <h2 className="cardTitle">{data.monthName}</h2>
-            <div
-              className={
-                data.begBalance >= 0
-                  ? 'positiveBalance monthInputs'
-                  : 'negativeBalance monthInputs'
-              }
-            >
+                    <option value={0}>SELECT ONE</option>
+                    <option value={1}>January</option>
+                    <option value={2}>February</option>
+                    <option value={3}>March</option>
+                    <option value={4}>April</option>
+                    <option value={5}>May</option>
+                    <option value={6}>June</option>
+                    <option value={7}>July</option>
+                    <option value={8}>August</option>
+                    <option value={9}>September</option>
+                    <option value={10}>October</option>
+                    <option value={11}>November</option>
+                    <option value={12}>December</option>
+                  </select>
+                  {optionsState !== undefined && costAmount > 0 && (
+                    <button
+                      className="submit"
+                      onClick={() =>
+                        handleAdditionExpense(
+                          costTitle,
+                          costAmount,
+                          parseInt(optionsState),
+                        )
+                      }
+                    >
+                      Submit
+                    </button>
+                  )}
+                </label>
+              </div>
+              <div className="inputLabel">
+                <label className="inputSection">
+                  Single Contribution:
+                  <input
+                    type="text"
+                    value={contributionTitle}
+                    onChange={(e) =>
+                      setContributionTitle(e.currentTarget.value)
+                    }
+                    placeholder="Name of Contribution"
+                    className="inputBox"
+                  ></input>
+                  <input
+                    type="number"
+                    value={contributionAmount}
+                    onChange={(e) =>
+                      setContributionAmount(parseFloat(e.currentTarget.value))
+                    }
+                    className="inputBox"
+                  ></input>
+                  <select
+                    id="month"
+                    value={optionsConstState}
+                    onChange={(e) =>
+                      setOptionsConstState(parseInt(e.currentTarget.value))
+                    }
+                    required
+                    className="inputBox"
+                  >
+                    <option value={0}>SELECT ONE</option>
+                    <option value={1}>January</option>
+                    <option value={2}>February</option>
+                    <option value={3}>March</option>
+                    <option value={4}>April</option>
+                    <option value={5}>May</option>
+                    <option value={6}>June</option>
+                    <option value={7}>July</option>
+                    <option value={8}>August</option>
+                    <option value={9}>September</option>
+                    <option value={10}>October</option>
+                    <option value={11}>November</option>
+                    <option value={12}>December</option>
+                  </select>
+                  {optionsConstState !== undefined && contributionAmount > 0 && (
+                    <button
+                      className="submit"
+                      onClick={() =>
+                        handleAdditionContribution(
+                          contributionTitle,
+                          contributionAmount,
+                          optionsConstState,
+                        )
+                      }
+                    >
+                      Submit
+                    </button>
+                  )}
+                </label>
+              </div>
+            </section>
+          </header>
+        )}
+        <main className="mainSection">
+          {data.map((data, index) => (
+            <section key={index} className="monthCard">
+              <h2 className="cardTitle">{data.monthName}</h2>
               <div
                 className={
-                  data.begBalance >= 0 ? 'positiveBalance' : 'negativeBalance'
+                  data.begBalance >= 0
+                    ? 'positiveBalance monthInputs'
+                    : 'negativeBalance monthInputs'
                 }
               >
-                Beginning Balance: ${data.begBalance.toFixed(2)}
+                <div
+                  className={
+                    data.begBalance >= 0 ? 'positiveBalance' : 'negativeBalance'
+                  }
+                >
+                  Beginning Balance: ${data.begBalance.toFixed(2)}
+                </div>
               </div>
-            </div>
-            <div
-              className={
-                data.endBalance >= 0
-                  ? 'positiveBalance monthEndBalance'
-                  : 'negativeBalance monthEndBalance'
-              }
-            >
-              <div className="monthExpenses">
-                <div> Monthly Contributions</div>
-                <div>${monthlyContribution} </div>
-                {data.monthContributions.length > 0 &&
-                  data.monthContributions.map((data, index) => (
-                    <div key={index}>
-                      {data.title} ${data.contribution}
-                      <button
-                        onClick={() =>
-                          handleRemoveContribution(data.monthIN, index)
-                        }
-                      >
-                        X
-                      </button>
-                    </div>
-                  ))}
-              </div>
-              {data.monthData.length > 0 && (
+              <div
+                className={
+                  data.endBalance >= 0
+                    ? 'positiveBalance monthEndBalance'
+                    : 'negativeBalance monthEndBalance'
+                }
+              >
                 <div className="monthExpenses">
-                  Expenses
-                  {data.monthData.map((data, index) => (
-                    <div key={index}>
-                      {data.title} ${data.cost}
-                      {data.monthIN && (
+                  <div> Monthly Contributions</div>
+                  <div>${monthlyContribution} </div>
+                  {data.monthContributions.length > 0 &&
+                    data.monthContributions.map((data, index) => (
+                      <div key={index}>
+                        {data.title} ${data.contribution}
                         <button
-                          onClick={() => handleUpdate(data.monthIN, index)}
+                          onClick={() =>
+                            handleRemoveContribution(data.monthIN, index)
+                          }
                         >
                           X
                         </button>
-                      )}
-                    </div>
-                  ))}
+                      </div>
+                    ))}
                 </div>
-              )}
-              Ending Balance: ${data.endBalance.toFixed(2)}
-            </div>
-          </section>
-        ))}
-      </main>
-    </div>
+                {data.monthData.length > 0 && (
+                  <div className="monthExpenses">
+                    Expenses
+                    {data.monthData.map((data, index) => (
+                      <div key={index}>
+                        {data.title} ${data.cost}
+                        {data.monthIN && (
+                          <button
+                            onClick={() => handleUpdate(data.monthIN, index)}
+                          >
+                            X
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+                Ending Balance: ${data.endBalance.toFixed(2)}
+              </div>
+            </section>
+          ))}
+        </main>
+      </div>
+      <Footer />
+    </section>
   );
 };
 
