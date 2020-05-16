@@ -1,114 +1,10 @@
 import React, { useState } from 'react';
 import '../Styling/App.scss';
 import TestData from './TestData';
-import TestDataProps from './TestData';
+// import TestDataProps from './TestData';
 
-function App() {
-  const [data, setData] = useState([
-    {
-      monthId: 1,
-      monthName: 'January',
-      begBalance: 4000,
-      endBalance: 4496,
-      monthData: [{ title: 'HOA', cost: 204, monthIN: 1 }],
-      monthContributions: [{title: "Hello", contribution: 100, monthIN: 1}],
-    },
-    {
-      monthId: 2,
-      monthName: 'February',
-      begBalance: 4496,
-      endBalance: 3920.11,
-      monthData: [{ title: 'Property Taxes', cost: 1275.89, monthIN: 2 }],
-      monthContributions: [],
-    },
-    {
-      monthId: 3,
-      monthName: 'March',
-      begBalance: 3920.11,
-      endBalance: 4620.11,
-      monthData: [],
-      monthContributions: [],
-    },
-    {
-      monthId: 4,
-      monthName: 'April',
-      begBalance: 4620.11,
-      endBalance: -216.49,
-      monthData: [
-        { title: 'Income Taxes', cost: 4000, monthIN: 4 },
-        { title: 'Home Insurance', cost: 865.73, monthIN: 4 },
-        { title: 'Auto Insurance', cost: 670.87, monthIN: 4 },
-      ],
-      monthContributions: [],
-    },
-    {
-      monthId: 5,
-      monthName: 'May',
-      begBalance: -216.49,
-      endBalance: 483.51,
-      monthData: [],
-      monthContributions: [],
-    },
-    {
-      monthId: 6,
-      monthName: 'June',
-      begBalance: 483.51,
-      endBalance: -92.38,
-      monthData: [{ title: 'Property Taxes', cost: 1275.89, monthIN: 6 }],
-      monthContributions: [],
-    },
-    {
-      monthId: 7,
-      monthName: 'July',
-      begBalance: -92.38,
-      endBalance: 298.12,
-      monthData: [
-        { title: 'HOA Dues', cost: 189.5, monthIN: 7 },
-        { title: 'Amazon', cost: 120, monthIN: 7 },
-      ],
-      monthContributions: [],
-    },
-    {
-      monthId: 8,
-      monthName: 'August',
-      begBalance: 298.12,
-      endBalance: 327.25,
-      monthData: [{ title: 'Life Insurance', cost: 670.87, monthIN: 8 }],
-      monthContributions: [],
-    },
-    {
-      monthId: 9,
-      monthName: 'September',
-      begBalance: 327.25,
-      endBalance: 1027.25,
-      monthData: [],
-      monthContributions: [],
-    },
-    {
-      monthId: 10,
-      monthName: 'October',
-      begBalance: 1027.25,
-      endBalance: 1727.25,
-      monthData: [],
-      monthContributions: [],
-    },
-    {
-      monthId: 11,
-      monthName: 'November',
-      begBalance: 1727.25,
-      endBalance: 2307.25,
-      monthData: [{ title: 'Costco', cost: 120, monthIN: 11 }],
-      monthContributions: [],
-    },
-    {
-      monthId: 12,
-      monthName: 'December',
-      begBalance: 2307.25,
-      endBalance: 2766.7,
-      monthData: [{ title: 'Vehicle Registration', cost: 240.55, monthIN: 12 }],
-      monthContributions: [],
-    },
-  ]);
+const App = () => {
+  const [data, setData] = useState(TestData);
 
   //Input section
   const [initialFunding, setInitialFunding] = useState(4000);
@@ -130,6 +26,15 @@ function App() {
     let initialData = [...data];
     initialData[month - 1].monthData.splice(index, 1);
     setData(initialData);
+
+    handleUpdateDataState();
+  };
+
+  const handleRemoveContribution = (month: number, index: number) => {
+    let initialData = [...data];
+    initialData[month - 1].monthContributions.splice(index, 1);
+    setData(initialData);
+
     handleUpdateDataState();
   };
 
@@ -155,11 +60,11 @@ function App() {
     handleUpdateDataState();
   };
 
-  const handleAdditionContribution =(
-      contributionTitle: string,
-      contributionAmount: number,
-      optionsConstState: number,
-  )=>{
+  const handleAdditionContribution = (
+    contributionTitle: string,
+    contributionAmount: number,
+    optionsConstState: number,
+  ) => {
     let object = [...data];
     //add to december index is number-1
     object[optionsConstState - 1].monthContributions.push({
@@ -168,15 +73,15 @@ function App() {
       monthIN: optionsConstState,
     });
     console.log({ contributionTitle, contributionAmount, optionsConstState });
-    console.log({data});
+    console.log({ data });
     handleUpdateDataState();
-  }
+  };
 
   const handleUpdateDataState = () => {
     if (initialFunding > 0 && monthlyContribution > 0) {
       let object = [...data];
 
-       const sumMonthlyCost = (monthIndex: number, begBalance: number) => {
+      const sumMonthlyCost = (monthIndex: number, begBalance: number) => {
         const totalCost = object[monthIndex].monthData.reduce(function(
           acc,
           num,
@@ -185,9 +90,12 @@ function App() {
         },
         0);
 
-        const contribution = object[monthIndex].monthContributions.reduce(function(
-            acc, num
-        ){return acc + num.contribution}, 0);
+        const contribution = object[monthIndex].monthContributions.reduce(
+          function(acc, num) {
+            return acc + num.contribution;
+          },
+          0,
+        );
 
         object[monthIndex].endBalance =
           begBalance + contribution + monthlyContribution - totalCost;
@@ -199,8 +107,12 @@ function App() {
 
       //January settings
       const janContribution = object[0].monthContributions.reduce(function(
-          acc, num
-      ){return acc + num.contribution}, 0);
+        acc,
+        num,
+      ) {
+        return acc + num.contribution;
+      },
+      0);
       object[0].begBalance = initialFunding;
       object[0].endBalance =
         initialFunding + janContribution + monthlyContribution - januaryCosts;
@@ -317,26 +229,28 @@ function App() {
               <label className="inputSection">
                 Single Contribution:
                 <input
-                    type="text"
-                    value={contributionTitle}
-                    onChange={(e) => setContributionTitle(e.currentTarget.value)}
-                    placeholder="Name of Contribution"
-                    className="inputBox"
+                  type="text"
+                  value={contributionTitle}
+                  onChange={(e) => setContributionTitle(e.currentTarget.value)}
+                  placeholder="Name of Contribution"
+                  className="inputBox"
                 ></input>
                 <input
-                    type="number"
-                    value={contributionAmount}
-                    onChange={(e) =>
-                        setContributionAmount(parseFloat(e.currentTarget.value))
-                    }
-                    className="inputBox"
+                  type="number"
+                  value={contributionAmount}
+                  onChange={(e) =>
+                    setContributionAmount(parseFloat(e.currentTarget.value))
+                  }
+                  className="inputBox"
                 ></input>
                 <select
-                    id="month"
-                    value={optionsConstState}
-                    onChange={(e) => setOptionsConstState(parseInt(e.currentTarget.value))}
-                    required
-                    className="inputBox"
+                  id="month"
+                  value={optionsConstState}
+                  onChange={(e) =>
+                    setOptionsConstState(parseInt(e.currentTarget.value))
+                  }
+                  required
+                  className="inputBox"
                 >
                   <option value={0}>SELECT ONE</option>
                   <option value={1}>January</option>
@@ -353,18 +267,18 @@ function App() {
                   <option value={12}>December</option>
                 </select>
                 {optionsConstState !== undefined && contributionAmount > 0 && (
-                    <div
-                        className="submit"
-                        onClick={() =>
-                            handleAdditionContribution(
-                                contributionTitle,
-                                contributionAmount,
-                                optionsConstState,
-                            )
-                        }
-                    >
-                      Submit
-                    </div>
+                  <div
+                    className="submit"
+                    onClick={() =>
+                      handleAdditionContribution(
+                        contributionTitle,
+                        contributionAmount,
+                        optionsConstState,
+                      )
+                    }
+                  >
+                    Submit
+                  </div>
                 )}
               </label>
             </div>
@@ -398,16 +312,21 @@ function App() {
               }
             >
               <div className="monthExpenses">
-                <button onClick={() => alert('add money')}>&#43;</button>
-                <div> Monthly Contribution: ${monthlyContribution}{' '}</div>
-                {/*{data.monthContributions.length > 0 && */}
-                {/*data.monthContributions.map((data, index)=>(*/}
-                {/*    <div key={index}>*/}
-                {/*      {data}*/}
-                {/*    </div>*/}
-                {/*))*/}
-                {/*}*/}
-
+                <div> Monthly Contributions</div>
+                <div>${monthlyContribution} </div>
+                {data.monthContributions.length > 0 &&
+                  data.monthContributions.map((data, index) => (
+                    <div key={index}>
+                      {data.title} ${data.contribution}
+                      <button
+                        onClick={() =>
+                          handleRemoveContribution(data.monthIN, index)
+                        }
+                      >
+                        X
+                      </button>
+                    </div>
+                  ))}
               </div>
               {data.monthData.length > 0 && (
                 <div className="monthExpenses">
@@ -433,6 +352,6 @@ function App() {
       </main>
     </div>
   );
-}
+};
 
 export default App;
