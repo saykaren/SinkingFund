@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import '../Styling/App.scss';
 import TestData from './TestData';
 import Footer from './Footer';
+import StartData from "./StartData";
 
 const App = () => {
-  const [data, setData] = useState(TestData);
+  // const [data, setData] = useState(TestData);
+  const [data, setData] = useState(StartData);
 
   //issue with blank data is it doesn't have interface for array details
 
   //Input section
-  const [initialFunding, setInitialFunding] = useState(4000);
+  const [initialFunding, setInitialFunding] = useState(data[0].begBalance);
   const [costTitle, setCostTitle] = useState<string>('');
   const [costAmount, setCostAmount] = useState<number>(0);
   const [contributionTitle, setContributionTitle] = useState<string>('');
@@ -17,7 +19,7 @@ const App = () => {
   const [optionsConstState, setOptionsConstState] = useState<number>();
 
   const [optionsState, setOptionsState] = useState<string>();
-  const [monthlyContribution, setMonthlyContribution] = useState<number>(700);
+  const [monthlyContribution, setMonthlyContribution] = useState<number>(0);
 
   const [menu, setMenu] = useState(true);
   interface handleUpdateProps {
@@ -75,7 +77,7 @@ const App = () => {
   };
 
   const handleUpdateDataState = () => {
-    if (initialFunding > 0 && monthlyContribution > 0) {
+    if (initialFunding > 0 || monthlyContribution > 0) {
       let object = [...data];
 
       const sumMonthlyCost = (monthIndex: number, begBalance: number) => {
@@ -320,8 +322,13 @@ const App = () => {
                 }
               >
                 <div className="monthExpenses">
-                  <div> Monthly Contributions</div>
-                  <div>${monthlyContribution} </div>
+                  {(monthlyContribution > 0 || data.monthContributions.length > 0) &&
+                          <>
+                      <div> Monthly Contributions</div>
+                      {monthlyContribution > 0 && <div>${monthlyContribution} </div>}
+                      </>
+                  }
+
                   {data.monthContributions.length > 0 &&
                     data.monthContributions.map((data, index) => (
                       <div key={index}>

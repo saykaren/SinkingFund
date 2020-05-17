@@ -131,7 +131,7 @@ export const TestData =
 //             monthIn?: number;
 //         },
 //     ];
-//     monthContributions: [{ title: string; cost: number; monthIN: number }];
+//     monthContributions: [{ title: string; contribution: number; monthIN: number }];
 // }
 // export const BlankData: [TestDataProps] = [
 //     {
