@@ -5,7 +5,6 @@ import Footer from './Footer';
 import StartData from './StartData';
 
 const App = () => {
-  // const [data, setData] = useState(TestData);
   const [data, setData] = useState(StartData);
 
   //Input section
@@ -57,7 +56,6 @@ const App = () => {
     let initialData = [...data];
     initialData[month - 1].monthContributions.splice(index, 1);
     setData(initialData);
-
     handleUpdateDataState();
   };
 
@@ -149,10 +147,10 @@ const App = () => {
     }
   };
 
-  const handleSampleData = () =>{
+  const handleSampleData = () => {
     setData(TestData);
     setMonthlyContribution(700);
-  }
+  };
 
   return (
     <section>
