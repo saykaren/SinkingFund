@@ -22,15 +22,14 @@ const App = () => {
   const [monthlyContribution, setMonthlyContribution] = useState<number>(0);
 
   const [menu, setMenu] = useState(true);
-  // interface handleUpdateProps {
-  //   month: number;
-  //   index: number;
-  // }
+
+  //Adjust starting month
+  const [startMonth, setStartMonth] = useState(1);
+
   const handleUpdate = (month: number, index: number) => {
     let initialData = [...data];
     initialData[month - 1].monthData.splice(index, 1);
     setData(initialData);
-
     handleUpdateDataState();
   };
 
@@ -290,6 +289,30 @@ const App = () => {
                       Submit
                     </button>
                   )}
+                  <div>Adjust Start Month</div>
+                  <select
+                      id="month"
+                      value={optionsConstState}
+                      onChange={(e) =>
+                          setStartMonth(parseInt(e.currentTarget.value))
+                      }
+                      required
+                      className="inputBox"
+
+                  >
+                    <option value={1} >January</option>
+                    <option value={2}>February</option>
+                    <option value={3}>March</option>
+                    <option value={4}>April</option>
+                    <option value={5}>May</option>
+                    <option value={6}>June</option>
+                    <option value={7}>July</option>
+                    <option value={8}>August</option>
+                    <option value={9}>September</option>
+                    <option value={10}>October</option>
+                    <option value={11}>November</option>
+                    <option value={12}>December</option>
+                  </select>
                 </label>
               </div>
             </section>
@@ -297,77 +320,77 @@ const App = () => {
         )}
         <main className="mainSection">
           {data.map((data, index) => (
-            <section key={index} className="monthCard">
-              <h2 className="cardTitle">{data.monthName}</h2>
-              <div
-                className={
-                  data.begBalance >= 0
-                    ? 'positiveBalance monthInputs'
-                    : 'negativeBalance monthInputs'
-                }
-              >
+             <section key={index} className={(data.monthId >= startMonth) ? "monthCard" : "hidden"}>
+                <h2 className="cardTitle">{data.monthName}</h2>
                 <div
-                  className={
-                    data.begBalance >= 0 ? 'positiveBalance' : 'negativeBalance'
-                  }
+                    className={
+                      data.begBalance >= 0
+                          ? 'positiveBalance monthInputs'
+                          : 'negativeBalance monthInputs'
+                    }
                 >
-                  <span className="monthHeader"> Beginning Balance:</span> $
-                  {data.begBalance.toFixed(2)}
+                  <div
+                      className={
+                        data.begBalance >= 0 ? 'positiveBalance' : 'negativeBalance'
+                      }
+                  >
+                    <span className="monthHeader"> Beginning Balance:</span> $
+                    {data.begBalance.toFixed(2)}
+                  </div>
                 </div>
-              </div>
-              <div
-                className={
-                  data.endBalance >= 0
-                    ? 'positiveBalance monthEndBalance'
-                    : 'negativeBalance monthEndBalance'
-                }
-              >
-                <div className="monthExpenses">
-                  {(monthlyContribution > 0 ||
-                    data.monthContributions.length > 0) && (
-                    <>
-                      <div className="monthHeader"> Month Contributions</div>
-                      {monthlyContribution > 0 && (
-                        <div>${monthlyContribution} </div>
-                      )}
-                    </>
-                  )}
-
-                  {data.monthContributions.length > 0 &&
-                    data.monthContributions.map((data, index) => (
-                      <div key={index}>
-                        {data.title} ${data.contribution}
-                        <button
-                          onClick={() =>
-                            handleRemoveContribution(data.monthIN, index)
-                          }
-                        >
-                          X
-                        </button>
-                      </div>
-                    ))}
-                </div>
-                {data.monthData.length > 0 && (
+                <div
+                    className={
+                      data.endBalance >= 0
+                          ? 'positiveBalance monthEndBalance'
+                          : 'negativeBalance monthEndBalance'
+                    }
+                >
                   <div className="monthExpenses">
-                    <div className="monthHeader">Month Expenses</div>
-                    {data.monthData.map((data, index) => (
-                      <div key={index}>
-                        {data.title} ${data.cost}
-                        {data.monthIN && (
+                    {(monthlyContribution > 0 ||
+                        data.monthContributions.length > 0) && (
+                        <>
+                          <div className="monthHeader"> Month Contributions</div>
+                          {monthlyContribution > 0 && (
+                              <div>${monthlyContribution} </div>
+                          )}
+                        </>
+                    )}
+
+                    {data.monthContributions.length > 0 &&
+                    data.monthContributions.map((data, index) => (
+                        <div key={index}>
+                          {data.title} ${data.contribution}
                           <button
-                            onClick={() => handleUpdate(data.monthIN, index)}
+                              onClick={() =>
+                                  handleRemoveContribution(data.monthIN, index)
+                              }
                           >
                             X
                           </button>
-                        )}
-                      </div>
+                        </div>
                     ))}
                   </div>
-                )}
-                <span className="monthHeader"> Ending Balance:</span> $
-                {data.endBalance.toFixed(2)}
-              </div>
-            </section>
+                  {data.monthData.length > 0 && (
+                      <div className="monthExpenses">
+                        <div className="monthHeader">Month Expenses</div>
+                        {data.monthData.map((data, index) => (
+                            <div key={index}>
+                              {data.title} ${data.cost}
+                              {data.monthIN && (
+                                  <button
+                                      onClick={() => handleUpdate(data.monthIN, index)}
+                                  >
+                                    X
+                                  </button>
+                              )}
+                            </div>
+                        ))}
+                      </div>
+                  )}
+                  <span className="monthHeader"> Ending Balance:</span> $
+                  {data.endBalance.toFixed(2)}
+                </div>
+              </section>
           ))}
         </main>
       </div>
