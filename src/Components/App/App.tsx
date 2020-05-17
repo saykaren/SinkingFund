@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../Styling/App.scss';
 import TestData from './TestData';
 import Footer from './Footer';
-import StartData from "./StartData";
+import StartData from './StartData';
 
 const App = () => {
   // const [data, setData] = useState(TestData);
@@ -22,10 +22,10 @@ const App = () => {
   const [monthlyContribution, setMonthlyContribution] = useState<number>(0);
 
   const [menu, setMenu] = useState(true);
-  interface handleUpdateProps {
-    month: number;
-    index: number;
-  }
+  // interface handleUpdateProps {
+  //   month: number;
+  //   index: number;
+  // }
   const handleUpdate = (month: number, index: number) => {
     let initialData = [...data];
     initialData[month - 1].monthData.splice(index, 1);
@@ -311,7 +311,8 @@ const App = () => {
                     data.begBalance >= 0 ? 'positiveBalance' : 'negativeBalance'
                   }
                 >
-                  Beginning Balance: ${data.begBalance.toFixed(2)}
+                  <span className="monthHeader"> Beginning Balance:</span> $
+                  {data.begBalance.toFixed(2)}
                 </div>
               </div>
               <div
@@ -322,12 +323,15 @@ const App = () => {
                 }
               >
                 <div className="monthExpenses">
-                  {(monthlyContribution > 0 || data.monthContributions.length > 0) &&
-                          <>
-                      <div> Monthly Contributions</div>
-                      {monthlyContribution > 0 && <div>${monthlyContribution} </div>}
-                      </>
-                  }
+                  {(monthlyContribution > 0 ||
+                    data.monthContributions.length > 0) && (
+                    <>
+                      <div className="monthHeader"> Month Contributions</div>
+                      {monthlyContribution > 0 && (
+                        <div>${monthlyContribution} </div>
+                      )}
+                    </>
+                  )}
 
                   {data.monthContributions.length > 0 &&
                     data.monthContributions.map((data, index) => (
@@ -345,7 +349,7 @@ const App = () => {
                 </div>
                 {data.monthData.length > 0 && (
                   <div className="monthExpenses">
-                    Expenses
+                    <div className="monthHeader">Month Expenses</div>
                     {data.monthData.map((data, index) => (
                       <div key={index}>
                         {data.title} ${data.cost}
@@ -360,7 +364,8 @@ const App = () => {
                     ))}
                   </div>
                 )}
-                Ending Balance: ${data.endBalance.toFixed(2)}
+                <span className="monthHeader"> Ending Balance:</span> $
+                {data.endBalance.toFixed(2)}
               </div>
             </section>
           ))}
