@@ -7,7 +7,6 @@ import StartData from './StartData';
 const App = () => {
   // const [data, setData] = useState(TestData);
   const [data, setData] = useState(StartData);
-  const localStorageData = localStorage.getItem('savedData');
 
   //Input section
   const [initialFunding, setInitialFunding] = useState(data[0].begBalance);
@@ -25,22 +24,26 @@ const App = () => {
   //Adjust starting month
   const [startMonth, setStartMonth] = useState(1);
 
-  useEffect(()=>{
+  useEffect(() => {
     const storedData = localStorage.getItem('dataPersist');
-    const monthlyContributionStorage = localStorage.getItem('monthlyContribution');
-    if(storedData){
-      setData(JSON.parse(storedData))
-    };
-    if(monthlyContributionStorage){
-      setMonthlyContribution(JSON.parse(monthlyContributionStorage))
+    const monthlyContributionStorage = localStorage.getItem(
+      'monthlyContribution',
+    );
+    if (storedData) {
+      setData(JSON.parse(storedData));
     }
-
+    if (monthlyContributionStorage) {
+      setMonthlyContribution(JSON.parse(monthlyContributionStorage));
+    }
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     localStorage.setItem('dataPersist', JSON.stringify(data));
     localStorage.setItem('savedDataDate', JSON.stringify(Date.now()));
-    localStorage.setItem('monthlyContribution', JSON.stringify(monthlyContribution));
+    localStorage.setItem(
+      'monthlyContribution',
+      JSON.stringify(monthlyContribution),
+    );
   });
 
   const handleUpdate = (month: number, index: number) => {
@@ -219,7 +222,7 @@ const App = () => {
                   ></input>
                   {monthlyContribution > 0 && (
                     <button onClick={(e) => handleUpdateDataState()}>
-                      Submit
+                      Apply Contribution
                     </button>
                   )}
                 </label>
@@ -443,7 +446,9 @@ const App = () => {
           ))}
         </main>
       </div>
-      <button onClick={()=>localStorage.clear()}>Clear Storage</button>
+      <button onClick={() => localStorage.clear()}>Clear Storage</button>
+      <button onClick={() => setData(StartData)}>Start From Scratch</button>
+      <button onClick={() => setData(TestData)}>Example Data</button>
       <Footer />
     </section>
   );
