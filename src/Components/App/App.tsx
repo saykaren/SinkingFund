@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../Styling/App.scss';
 import TestData from './TestData';
 import Footer from './Footer';
@@ -7,8 +7,7 @@ import StartData from './StartData';
 const App = () => {
   // const [data, setData] = useState(TestData);
   const [data, setData] = useState(StartData);
-
-  //issue with blank data is it doesn't have interface for array details
+  const localStorageData = localStorage.getItem('savedData');
 
   //Input section
   const [initialFunding, setInitialFunding] = useState(data[0].begBalance);
@@ -25,6 +24,24 @@ const App = () => {
 
   //Adjust starting month
   const [startMonth, setStartMonth] = useState(1);
+
+  useEffect(()=>{
+    const storedData = localStorage.getItem('dataPersist');
+    const monthlyContributionStorage = localStorage.getItem('monthlyContribution');
+    if(storedData){
+      setData(JSON.parse(storedData))
+    };
+    if(monthlyContributionStorage){
+      setMonthlyContribution(JSON.parse(monthlyContributionStorage))
+    }
+
+  }, []);
+
+  useEffect(()=>{
+    localStorage.setItem('dataPersist', JSON.stringify(data));
+    localStorage.setItem('savedDataDate', JSON.stringify(Date.now()));
+    localStorage.setItem('monthlyContribution', JSON.stringify(monthlyContribution));
+  });
 
   const handleUpdate = (month: number, index: number) => {
     let initialData = [...data];
@@ -131,6 +148,30 @@ const App = () => {
       setData(object);
     }
   };
+
+  // const handleLocalStorage = () =>{
+  //   localStorage.setItem('savedData', JSON.stringify(data));
+  //   localStorage.setItem('savedDataDate', JSON.stringify(Date.now()));
+  // }
+  //
+  // const handleUploadLocalStorage = () =>{
+  //   const getItem = localStorage.getItem('savedData');
+  //   console.log({getItem});
+  //   // if(JSON.parse(localStorage.getItem('savedData')) !== null){
+  //   //   const importData = JSON.parse(localStorage.getItem('savedData'));
+  //   // }
+  //   //
+  //   //
+  //   // console.log({importData});
+  //   // console.log({data});
+  //   //
+  //   // localStorage.getItem('savedData') && setData(importData);
+  //   // importData && setData(importData);
+  //   // if(JSON.parse(localStorage.getItem('savedData'))){
+  //   //
+  //   // }
+  //
+  // }
 
   return (
     <section>
@@ -402,6 +443,7 @@ const App = () => {
           ))}
         </main>
       </div>
+      <button onClick={()=>localStorage.clear()}>Clear Storage</button>
       <Footer />
     </section>
   );
