@@ -133,9 +133,6 @@ const App = () => {
         return acc + num.contribution;
       },
       0);
-      // object[0].begBalance = initialFunding;
-      // object[0].endBalance =
-      //   initialFunding + janContribution + monthlyContribution - januaryCosts;
 
       object[0].begBalance = initialFunding;
       object[0].endBalance =
@@ -152,40 +149,16 @@ const App = () => {
     }
   };
 
-  // const handleLocalStorage = () =>{
-  //   localStorage.setItem('savedData', JSON.stringify(data));
-  //   localStorage.setItem('savedDataDate', JSON.stringify(Date.now()));
-  // }
-  //
-  // const handleUploadLocalStorage = () =>{
-  //   const getItem = localStorage.getItem('savedData');
-  //   console.log({getItem});
-  //   // if(JSON.parse(localStorage.getItem('savedData')) !== null){
-  //   //   const importData = JSON.parse(localStorage.getItem('savedData'));
-  //   // }
-  //   //
-  //   //
-  //   // console.log({importData});
-  //   // console.log({data});
-  //   //
-  //   // localStorage.getItem('savedData') && setData(importData);
-  //   // importData && setData(importData);
-  //   // if(JSON.parse(localStorage.getItem('savedData'))){
-  //   //
-  //   // }
-  //
-  // }
-
   return (
     <section>
       <div className="App">
         {menu === false && (
-          <div onClick={() => setMenu(true)} className="menuOpen">
+          <div onClick={() => setMenu(true)} className="openTab">
             &raquo;
           </div>
         )}
         {menu && (
-          <header className="App-header">
+          <section className="App-header">
             <div onClick={() => setMenu(false)} className="menuOpen">
               &laquo;
             </div>
@@ -365,7 +338,7 @@ const App = () => {
                 </label>
               </div>
             </section>
-          </header>
+          </section>
         )}
         <main className="mainSection">
           {data.map((data, index) => (

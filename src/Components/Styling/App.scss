@@ -102,6 +102,13 @@ html {
 //    animation: App-logo-spin infinite 20s linear;
 //  }
 //}
+
+.openTab {
+  font-size: 5em;
+  z-index: 1;
+  color: $secondary_color;
+}
+
 .menuOpen {
   font-size: 5em;
   z-index: 1;
@@ -149,7 +156,6 @@ html {
   //justify-content: center;
   //font-size: calc(10px + 2vmin);
   color: white;
-  position: sticky;
   z-index: 1;
   opacity: 78%;
   max-width: 50%;
