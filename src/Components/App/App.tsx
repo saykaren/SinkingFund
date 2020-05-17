@@ -149,6 +149,11 @@ const App = () => {
     }
   };
 
+  const handleSampleData = () =>{
+    setData(TestData);
+    setMonthlyContribution(700);
+  }
+
   return (
     <section>
       <div className="App">
@@ -421,7 +426,7 @@ const App = () => {
       </div>
       <button onClick={() => localStorage.clear()}>Clear Storage</button>
       <button onClick={() => setData(StartData)}>Start From Scratch</button>
-      <button onClick={() => setData(TestData)}>Example Data</button>
+      <button onClick={() => handleSampleData()}>Example Data</button>
       <Footer />
     </section>
   );
