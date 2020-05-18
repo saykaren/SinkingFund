@@ -427,8 +427,8 @@ const App = () => {
       <button onClick={() => localStorage.clear()}>Clear Storage</button>
       <button onClick={() => setData(StartData)}>Start From Scratch</button>
       <button onClick={() => handleSampleData()}>Example Data</button>
-      <Footer />
       <Table data={data} />
+      <Footer />
     </section>
   );
 };
