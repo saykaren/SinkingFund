@@ -3,6 +3,8 @@ import '../Styling/App.scss';
 import TestData from './TestData';
 import Footer from './Footer';
 import StartData from './StartData';
+// import dataProps from "./Interface";
+import Table from './Table';
 
 const App = () => {
   const [data, setData] = useState(StartData);
@@ -426,6 +428,7 @@ const App = () => {
       <button onClick={() => setData(StartData)}>Start From Scratch</button>
       <button onClick={() => handleSampleData()}>Example Data</button>
       <Footer />
+      <Table data={data} />
     </section>
   );
 };
