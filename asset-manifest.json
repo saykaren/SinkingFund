@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/SinkingFund/static/css/main.7940e5f8.chunk.css",
-    "main.js": "/SinkingFund/static/js/main.bd2f5215.chunk.js",
-    "main.js.map": "/SinkingFund/static/js/main.bd2f5215.chunk.js.map",
+    "main.css": "/SinkingFund/static/css/main.4cf19ae2.chunk.css",
+    "main.js": "/SinkingFund/static/js/main.2103d19c.chunk.js",
+    "main.js.map": "/SinkingFund/static/js/main.2103d19c.chunk.js.map",
     "runtime-main.js": "/SinkingFund/static/js/runtime-main.577b2e71.js",
     "runtime-main.js.map": "/SinkingFund/static/js/runtime-main.577b2e71.js.map",
     "static/js/2.76f609fc.chunk.js": "/SinkingFund/static/js/2.76f609fc.chunk.js",
     "static/js/2.76f609fc.chunk.js.map": "/SinkingFund/static/js/2.76f609fc.chunk.js.map",
     "index.html": "/SinkingFund/index.html",
-    "precache-manifest.bac5d3d7bcda04caba961d3fc636fa11.js": "/SinkingFund/precache-manifest.bac5d3d7bcda04caba961d3fc636fa11.js",
+    "precache-manifest.37fa2df1e1d60ed22eb4fec6d0c45efb.js": "/SinkingFund/precache-manifest.37fa2df1e1d60ed22eb4fec6d0c45efb.js",
     "service-worker.js": "/SinkingFund/service-worker.js",
-    "static/css/main.7940e5f8.chunk.css.map": "/SinkingFund/static/css/main.7940e5f8.chunk.css.map",
+    "static/css/main.4cf19ae2.chunk.css.map": "/SinkingFund/static/css/main.4cf19ae2.chunk.css.map",
     "static/js/2.76f609fc.chunk.js.LICENSE.txt": "/SinkingFund/static/js/2.76f609fc.chunk.js.LICENSE.txt",
     "static/media/sayKaren_logo-white_8.1.2019.png": "/SinkingFund/static/media/sayKaren_logo-white_8.1.2019.d0827d01.png"
   },
   "entrypoints": [
     "static/js/runtime-main.577b2e71.js",
     "static/js/2.76f609fc.chunk.js",
-    "static/css/main.7940e5f8.chunk.css",
-    "static/js/main.bd2f5215.chunk.js"
+    "static/css/main.4cf19ae2.chunk.css",
+    "static/js/main.2103d19c.chunk.js"
   ]
 }
