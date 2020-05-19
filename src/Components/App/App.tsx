@@ -5,9 +5,13 @@ import Footer from './Footer';
 import StartData from './StartData';
 // import dataProps from "./Interface";
 import Table from './Table';
+import Modal from './Modal';
 
 const App = () => {
   const [data, setData] = useState(StartData);
+
+  //
+  const [modal, setModal] = useState(true);
 
   //Input section
   const [initialFunding, setInitialFunding] = useState(data[0].begBalance);
@@ -17,7 +21,7 @@ const App = () => {
   const [contributionAmount, setContributionAmount] = useState<number>(0);
   const [optionsConstState, setOptionsConstState] = useState<number>();
 
-  const [optionsState, setOptionsState] = useState<string>();
+  const [optionsState, setOptionsState] = useState<string>('O');
   const [monthlyContribution, setMonthlyContribution] = useState<number>(0);
 
   const [menu, setMenu] = useState(true);
@@ -156,6 +160,24 @@ const App = () => {
 
   return (
     <section>
+      {modal && (
+        <Modal
+          setModal={setModal}
+          initialFunding={initialFunding}
+          setInitialFunding={setInitialFunding}
+          handleInitialInput={handleInitialInput}
+          handleUpdateDataState={handleUpdateDataState}
+          monthlyContribution={monthlyContribution}
+          setMonthlyContribution={setMonthlyContribution}
+          costTitle={costTitle}
+          setCostTitle={setCostTitle}
+          costAmount={costAmount}
+          setCostAmount={setCostAmount}
+          optionsState={optionsState}
+          setOptionsState={setOptionsState}
+          handleAdditionExpense={handleAdditionExpense}
+        />
+      )}
       <div className="App">
         {menu === false && (
           <div onClick={() => setMenu(true)} className="openTab">
@@ -244,20 +266,22 @@ const App = () => {
                     <option value={11}>November</option>
                     <option value={12}>December</option>
                   </select>
-                  {optionsState !== undefined && costAmount > 0 && (
-                    <button
-                      className="submit"
-                      onClick={() =>
-                        handleAdditionExpense(
-                          costTitle,
-                          costAmount,
-                          parseInt(optionsState),
-                        )
-                      }
-                    >
-                      Submit
-                    </button>
-                  )}
+                  {optionsState !== undefined &&
+                    parseInt(optionsState) > 0 &&
+                    costAmount > 0 && (
+                      <button
+                        className="submit"
+                        onClick={() =>
+                          handleAdditionExpense(
+                            costTitle,
+                            costAmount,
+                            parseInt(optionsState),
+                          )
+                        }
+                      >
+                        Submit
+                      </button>
+                    )}
                 </label>
               </div>
               <div className="inputLabel">
