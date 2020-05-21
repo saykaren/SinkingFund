@@ -25,10 +25,26 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>Sinking Fund</title>
+    <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script>
+
+      const pressed = [];
+      const secreteCode = 'karen';
+      window.addEventListener('keyup', (e)=>{
+        console.log(e.key);
+        pressed.push(e.key);
+        pressed.splice(-secreteCode.length-1, pressed.length-secreteCode.length);
+        console.log(pressed);
+        if(pressed.join('').includes(secreteCode)){
+          console.log('Ding Ding!');
+          cornify_add();
+        }
+      })
+    </script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
