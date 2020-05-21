@@ -33,8 +33,10 @@ const Modal = ({
   handleAdditionExpense,
 }: ModalProps) => {
   const [knowSinking, setKnowSinking] = useState<string>('Select One');
+  const [getStarted, setGetStarted] = useState<string>('Select One');
 
   return (
+      <div className='overlay'>
     <div className="modal">
       <h2 className="modal-header">
         <button className="modal-close" onClick={() => setModal(false)}>
@@ -43,7 +45,9 @@ const Modal = ({
         <span className="positiveLarge">Sinking Fund!</span>
       </h2>
       <div className="modal-content">
+        <div className={(knowSinking !== 'Select One')? 'hidden' : 'modal-question'}>
         Do you know what a Sinking Fund is or what it is for?
+
         <select
           id="month"
           value={knowSinking}
@@ -55,8 +59,9 @@ const Modal = ({
           <option value={'Yes'}>Yes</option>
           <option value={'No'}>No</option>
         </select>
+        </div>
         <div className="modal-details">
-          {knowSinking === 'No' && (
+          {knowSinking === 'No' && getStarted === 'Select One' && (
             <>
               <details className="modal-section">
                 <summary className="modal-header">
@@ -86,9 +91,22 @@ const Modal = ({
                   your budget on track. Answer? A Sinking Fund!
                 </p>
               </details>
+              <div className="modal-header">Ready to get started?
+              <select
+                  id="month"
+                  value={getStarted}
+                  onChange={(e) => setGetStarted(e.currentTarget.value)}
+                  required
+                  className="inputOption"
+              >
+                <option value={'Select One'}>SELECT ONE</option>
+                <option value={'Yes'}>Yes</option>
+                <option value={'No'}>No</option>
+              </select>
+              </div>
             </>
           )}
-          {knowSinking !== 'Select One' && (
+          {(getStarted !== 'Select One' || knowSinking === 'Yes') && (
             <>
               <h2 className="modal-header">Lets Get Started!</h2>
               <div className="modal-section">
@@ -98,7 +116,7 @@ const Modal = ({
                       <summary className="modal-header">
                         Initial Funding
                       </summary>
-                      <p>
+                      <p className='hoover'>
                         Like any good fund you need to prime the pump. How much
                         can you initially put into this fund to help cover your
                         yearly costs?
@@ -241,6 +259,7 @@ const Modal = ({
         </div>
       </div>
     </div>
+      </div>
   );
 };
 export default Modal;
