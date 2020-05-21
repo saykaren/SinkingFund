@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
-import dataProps from './Interface';
+import dataProps, { TestDataProps } from './Interface';
 
-const Table = ({ data }: dataProps) => {
+interface TableProps {
+  data: Array<TestDataProps>;
+  initialFunding: number;
+  monthlyContribution: number;
+}
+
+const Table = ({ data, initialFunding, monthlyContribution }: TableProps) => {
   const [copyData, setCopyData] = useState(false);
 
   return (
@@ -13,53 +19,116 @@ const Table = ({ data }: dataProps) => {
           <table id="table-to-xls">
             <thead>
               <tr>
-                <th>Expense Title</th>
-                <th>Expense Cost</th>
-                <th>Expense Month</th>
+                <th>Title</th>
+                <th>Amount</th>
+                <th>Month</th>
               </tr>
             </thead>
             <tbody>
               {data &&
-                data.map(
-                  (num, index) =>
-                    num.monthData &&
-                    num.monthData.map((exp, index) => (
-                      <tr key={`row${index}`}>
-                        <td key={`title${index}`} id={`title${index}`}>
-                          {exp.title}
-                        </td>
-                        <td key={`cost${index}`}>{exp.cost}</td>
-                        <td key={`month${index}`}>{exp.monthIN}</td>
+                data.map((num, index) => (
+                  <>
+                    {num.monthId === 1 && (
+                      <tr>
+                        <td>Initial Funding</td>
+                        <td>{num.begBalance}</td>
+                        <td>1</td>
                       </tr>
-                    )),
-                )}
+                    )}
+                    <tr>
+                      <td>{num.monthName} Beginning Balance</td>
+                      <td>{(num.begBalance).toFixed(2)}</td>
+                      <td>{num.monthId}</td>
+                    </tr>
+                    <tr key={`row${index}`}>
+                      <td>Monthly Contribution</td>
+                      <td>{monthlyContribution}</td>
+                      <td>{num.monthId}</td>
+                    </tr>
+
+                    {num.monthData &&
+                      num.monthData.map((exp, index) => (
+                        <tr key={`rowExpense${index}`}>
+                          <td key={`title${index}`} id={`title${index}`}>
+                            {exp.title}
+                          </td>
+                          <td key={`cost${index}`}>-{exp.cost}</td>
+                          <td key={`month${index}`}>{exp.monthIN}</td>
+                        </tr>
+                      ))}
+                    {num.monthContributions &&
+                      num.monthContributions.map((con, index) => (
+                        <tr key={`rowContribution${index}`}>
+                          <td key={`title${index}`} id={`title${index}`}>
+                            {con.title}
+                          </td>
+                          <td key={`contribution${index}`}>
+                            {con.contribution}
+                          </td>
+                          <td key={`monthContr${index}`}>{con.monthIN}</td>
+                        </tr>
+                      ))}
+
+                    <tr>
+                      <td>{num.monthName} Ending Balance</td>
+                      <td>{num.endBalance.toFixed(2)}</td>
+                      <td>{num.monthId}</td>
+                    </tr>
+                  </>
+                ))}
             </tbody>
           </table>
-          <table id="table-to-xls">
-            <thead>
-              <tr>
-                <th>Contribution Title</th>
-                <th>Contribution Cost</th>
-                <th>Contribution Month</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data &&
-                data.map(
-                  (num, index) =>
-                    num.monthContributions &&
-                    num.monthContributions.map((exp, index) => (
-                      <tr key={`row${index}`}>
-                        <td key={`titleCont${index}`} id={`title${index}`}>
-                          {exp.title}
-                        </td>
-                        <td key={`contribution${index}`}>{exp.contribution}</td>
-                        <td key={`monthCont${index}`}>{exp.monthIN}</td>
-                      </tr>
-                    )),
-                )}
-            </tbody>
-          </table>
+
+          {/*<table id="table-to-xls">*/}
+          {/*  <thead>*/}
+          {/*    <tr>*/}
+          {/*      <th>Expense Title</th>*/}
+          {/*      <th>Expense Cost</th>*/}
+          {/*      <th>Expense Month</th>*/}
+          {/*    </tr>*/}
+          {/*  </thead>*/}
+          {/*  <tbody>*/}
+          {/*    {data &&*/}
+          {/*      data.map(*/}
+          {/*        (num, index) =>*/}
+          {/*          num.monthData &&*/}
+          {/*          num.monthData.map((exp, index) => (*/}
+          {/*            <tr key={`row${index}`}>*/}
+          {/*              <td key={`title${index}`} id={`title${index}`}>*/}
+          {/*                {exp.title}*/}
+          {/*              </td>*/}
+          {/*              <td key={`cost${index}`}>{exp.cost}</td>*/}
+          {/*              <td key={`month${index}`}>{exp.monthIN}</td>*/}
+          {/*            </tr>*/}
+          {/*          )),*/}
+          {/*      )}*/}
+          {/*  </tbody>*/}
+          {/*</table>*/}
+          {/*<table id="table-to-xls">*/}
+          {/*  <thead>*/}
+          {/*    <tr>*/}
+          {/*      <th>Contribution Title</th>*/}
+          {/*      <th>Contribution Cost</th>*/}
+          {/*      <th>Contribution Month</th>*/}
+          {/*    </tr>*/}
+          {/*  </thead>*/}
+          {/*  <tbody>*/}
+          {/*    {data &&*/}
+          {/*      data.map(*/}
+          {/*        (num, index) =>*/}
+          {/*          num.monthContributions &&*/}
+          {/*          num.monthContributions.map((exp, index) => (*/}
+          {/*            <tr key={`row${index}`}>*/}
+          {/*              <td key={`titleCont${index}`} id={`title${index}`}>*/}
+          {/*                {exp.title}*/}
+          {/*              </td>*/}
+          {/*              <td key={`contribution${index}`}>{exp.contribution}</td>*/}
+          {/*              <td key={`monthCont${index}`}>{exp.monthIN}</td>*/}
+          {/*            </tr>*/}
+          {/*          )),*/}
+          {/*      )}*/}
+          {/*  </tbody>*/}
+          {/*</table>*/}
         </>
       )}
     </>

@@ -451,7 +451,7 @@ const App = () => {
       <button onClick={() => localStorage.clear()}>Clear Storage</button>
       <button onClick={() => setData(StartData)}>Start From Scratch</button>
       <button onClick={() => handleSampleData()}>Example Data</button>
-      <Table data={data} />
+      <Table data={data} initialFunding={initialFunding} monthlyContribution={monthlyContribution}/>
       <Footer />
     </section>
   );
