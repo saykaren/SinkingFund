@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import dataProps, { TestDataProps } from './Interface';
+import { TestDataProps } from './Interface';
 
 interface TableProps {
   data: Array<TestDataProps>;
@@ -29,7 +29,7 @@ const Table = ({ data, initialFunding, monthlyContribution }: TableProps) => {
                 data.map((num, index) => (
                   <>
                     {num.monthId === 1 && (
-                      <tr>
+                      <tr key={`initial${index}`}>
                         <td>Initial Funding</td>
                         <td>{num.begBalance}</td>
                         <td>1</td>
@@ -37,7 +37,7 @@ const Table = ({ data, initialFunding, monthlyContribution }: TableProps) => {
                     )}
                     <tr>
                       <td>{num.monthName} Beginning Balance</td>
-                      <td>{(num.begBalance).toFixed(2)}</td>
+                      <td>{num.begBalance.toFixed(2)}</td>
                       <td>{num.monthId}</td>
                     </tr>
                     <tr key={`row${index}`}>

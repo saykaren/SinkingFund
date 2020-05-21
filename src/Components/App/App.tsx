@@ -6,6 +6,7 @@ import StartData from './StartData';
 // import dataProps from "./Interface";
 import Table from './Table';
 import Modal from './Modal';
+import MonthList from './MonthList';
 
 const App = () => {
   const [data, setData] = useState(StartData);
@@ -369,89 +370,22 @@ const App = () => {
             </section>
           </section>
         )}
-        <main className="mainSection">
-          {data.map((data, index) => (
-            <section
-              key={index}
-              className={data.monthId >= startMonth ? 'monthCard' : 'hidden'}
-            >
-              <h2 className="cardTitle">{data.monthName}</h2>
-              <div
-                className={
-                  data.begBalance >= 0
-                    ? 'positiveBalance monthInputs'
-                    : 'negativeBalance monthInputs'
-                }
-              >
-                <div
-                  className={
-                    data.begBalance >= 0 ? 'positiveBalance' : 'negativeBalance'
-                  }
-                >
-                  <span className="monthHeader"> Beginning Balance:</span> $
-                  {data.begBalance.toFixed(2)}
-                </div>
-              </div>
-              <div
-                className={
-                  data.endBalance >= 0
-                    ? 'positiveBalance monthEndBalance'
-                    : 'negativeBalance monthEndBalance'
-                }
-              >
-                <div className="monthExpenses">
-                  {(monthlyContribution > 0 ||
-                    data.monthContributions.length > 0) && (
-                    <>
-                      <div className="monthHeader"> Month Contributions</div>
-                      {monthlyContribution > 0 && (
-                        <div>${monthlyContribution} </div>
-                      )}
-                    </>
-                  )}
-
-                  {data.monthContributions.length > 0 &&
-                    data.monthContributions.map((data, index) => (
-                      <div key={index}>
-                        {data.title} ${data.contribution}
-                        <button
-                          onClick={() =>
-                            handleRemoveContribution(data.monthIN, index)
-                          }
-                        >
-                          X
-                        </button>
-                      </div>
-                    ))}
-                </div>
-                {data.monthData.length > 0 && (
-                  <div className="monthExpenses">
-                    <div className="monthHeader">Month Expenses</div>
-                    {data.monthData.map((data, index) => (
-                      <div key={index}>
-                        {data.title} ${data.cost}
-                        {data.monthIN && (
-                          <button
-                            onClick={() => handleUpdate(data.monthIN, index)}
-                          >
-                            X
-                          </button>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
-                <span className="monthHeader"> Ending Balance:</span> $
-                {data.endBalance.toFixed(2)}
-              </div>
-            </section>
-          ))}
-        </main>
+        <MonthList
+          data={data}
+          startMonth={startMonth}
+          monthlyContribution={monthlyContribution}
+          handleRemoveContribution={handleRemoveContribution}
+          handleUpdate={handleUpdate}
+        />
       </div>
       <button onClick={() => localStorage.clear()}>Clear Storage</button>
       <button onClick={() => setData(StartData)}>Start From Scratch</button>
       <button onClick={() => handleSampleData()}>Example Data</button>
-      <Table data={data} initialFunding={initialFunding} monthlyContribution={monthlyContribution}/>
+      <Table
+        data={data}
+        initialFunding={initialFunding}
+        monthlyContribution={monthlyContribution}
+      />
       <Footer />
     </section>
   );
