@@ -179,14 +179,7 @@ const Modal = ({
                       <p>
                         We all have those same typical yearly fees you need to
                         account for. Below will help guide you to the most
-                        typical fees and get your brain juices going on the
-                        right track of other yearly fees that might be special
-                        to you and your family.
-                      </p>
-                      <p>
-                        Just remember all of this can be adjusted so try to add
-                        as much as you can initially to help guide you and make
-                        adjustments later.
+                        typical fees.
                       </p>
                     </details>
                     <select
