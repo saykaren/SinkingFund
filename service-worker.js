@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/SinkingFund/precache-manifest.75af6b39e292d750ef2628effac88833.js"
+  "/SinkingFund/precache-manifest.22dad5bf1f80dd1a652c94d27f8a32c4.js"
 );
 
 self.addEventListener('message', (event) => {
