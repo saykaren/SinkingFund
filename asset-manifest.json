@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/SinkingFund/static/css/main.93b74c2e.chunk.css",
-    "main.js": "/SinkingFund/static/js/main.538951b0.chunk.js",
-    "main.js.map": "/SinkingFund/static/js/main.538951b0.chunk.js.map",
+    "main.js": "/SinkingFund/static/js/main.f997b43a.chunk.js",
+    "main.js.map": "/SinkingFund/static/js/main.f997b43a.chunk.js.map",
     "runtime-main.js": "/SinkingFund/static/js/runtime-main.577b2e71.js",
     "runtime-main.js.map": "/SinkingFund/static/js/runtime-main.577b2e71.js.map",
     "static/js/2.76f609fc.chunk.js": "/SinkingFund/static/js/2.76f609fc.chunk.js",
     "static/js/2.76f609fc.chunk.js.map": "/SinkingFund/static/js/2.76f609fc.chunk.js.map",
     "index.html": "/SinkingFund/index.html",
-    "precache-manifest.c0d0e6f8b03278f89a8defd4230bea0b.js": "/SinkingFund/precache-manifest.c0d0e6f8b03278f89a8defd4230bea0b.js",
+    "precache-manifest.75af6b39e292d750ef2628effac88833.js": "/SinkingFund/precache-manifest.75af6b39e292d750ef2628effac88833.js",
     "service-worker.js": "/SinkingFund/service-worker.js",
     "static/css/main.93b74c2e.chunk.css.map": "/SinkingFund/static/css/main.93b74c2e.chunk.css.map",
     "static/js/2.76f609fc.chunk.js.LICENSE.txt": "/SinkingFund/static/js/2.76f609fc.chunk.js.LICENSE.txt",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.577b2e71.js",
     "static/js/2.76f609fc.chunk.js",
     "static/css/main.93b74c2e.chunk.css",
-    "static/js/main.538951b0.chunk.js"
+    "static/js/main.f997b43a.chunk.js"
   ]
 }
