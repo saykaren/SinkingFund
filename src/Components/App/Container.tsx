@@ -9,7 +9,7 @@ import Menu from './Menu';
 
 const Container = () => {
   const [data, setData] = useState(StartData);
-    console.log({data});
+  console.log({ data });
   //
   const [modal, setModal] = useState(true);
 
@@ -27,7 +27,7 @@ const Container = () => {
   const [menu, setMenu] = useState(true);
 
   //Adjust starting month
-  const [startMonth, setStartMonth] = useState(1);
+  const [startMonth, setStartMonth] = useState(0);
 
   useEffect(() => {
     const storedData = localStorage.getItem('dataPersist');
@@ -121,32 +121,53 @@ const Container = () => {
           },
           0,
         );
-        monthIndex >= startMonth
-          ? (object[monthIndex].endBalance =
-              begBalance + +monthlyContribution + contribution - totalCost)
-          : (object[monthIndex].endBalance =
-              begBalance + contribution - totalCost);
+        // monthIndex >= startMonth
+        //   ? (object[monthIndex].endBalance =
+        //       begBalance + +monthlyContribution + contribution - totalCost)
+        //   : (object[monthIndex].endBalance =
+        //       begBalance + contribution - totalCost);
+        object[monthIndex].endBalance =
+          begBalance + monthlyContribution + contribution - totalCost;
       };
 
-      const januaryCosts = object[0].monthData.reduce(function(acc, num) {
+      // const januaryCosts = object[0].monthData.reduce(function(acc, num) {
+      //   return acc + num.cost;
+      // }, 0);
+      const firstMonthCosts = object[0].monthData.reduce(function(acc, num) {
         return acc + num.cost;
       }, 0);
 
       //January settings
-      const janContribution = object[0].monthContributions.reduce(function(
-        acc,
-        num,
-      ) {
-        return acc + num.contribution;
-      },
-      0);
+      // const janContribution = object[0].monthContributions.reduce(function(
+      //   acc,
+      //   num,
+      // ) {
+      //   return acc + num.contribution;
+      // },
+      // 0);
+      //First Month settings
+      const firstMonthContribution = object[0].monthContributions.reduce(
+        function(acc, num) {
+          return acc + num.contribution;
+        },
+        0,
+      );
 
       object[0].begBalance = initialFunding;
       object[0].endBalance =
-        initialFunding + janContribution + monthlyContribution - januaryCosts;
+        initialFunding +
+        firstMonthContribution +
+        monthlyContribution -
+        firstMonthCosts;
 
       object.map((number, index) => {
-        if (number.monthId !== 1) {
+        // if (number.monthId !== 1) {
+        //   /// 1 index for February
+        //   object[index].begBalance = object[index - 1].endBalance;
+        //   sumMonthlyCost(index, object[index].begBalance);
+        // }
+        if (index !== 0) {
+            console.log(`going through ${number.monthName} month`);
           /// 1 index for February
           object[index].begBalance = object[index - 1].endBalance;
           sumMonthlyCost(index, object[index].begBalance);
@@ -161,21 +182,14 @@ const Container = () => {
     setMonthlyContribution(700);
   };
 
-  const handleChangeMonthStart = (event:number)=>{
-      const currentData = [...data];
-      const cutMonths = currentData.slice(0,(event-1));
-      const cut2Months = currentData.splice(0, (event-1));
-
-      cutMonths.map((num, index)=>(
-          currentData.push(num)
-          )
-      );
-      // currentData.push(cutMonths[0]);
-            const newData = 0;
-      console.log({currentData});
-      //startMonth
-      //setStartMonth
-  }
+  const handleChangeMonthStart = (event: number) => {
+      console.log(event);
+    const currentData = [...data];
+      currentData.slice(0, event);
+      currentData.splice(0, event).map((num, index) => currentData.push(num));
+      console.log({ currentData });
+      setData(currentData);
+  };
 
   return (
     <section>
@@ -197,27 +211,36 @@ const Container = () => {
           handleAdditionExpense={handleAdditionExpense}
         />
       )}
-        <div>Adjust Start Month</div>
-        <select
-            id="month"
-            value={startMonth}
-            onChange={(e) => handleChangeMonthStart(parseInt(e.currentTarget.value))}
-            required
-            className="inputBox"
-        >
-            <option value={1}>January</option>
-            <option value={2}>February</option>
-            <option value={3}>March</option>
-            <option value={4}>April</option>
-            <option value={5}>May</option>
-            <option value={6}>June</option>
-            <option value={7}>July</option>
-            <option value={8}>August</option>
-            <option value={9}>September</option>
-            <option value={10}>October</option>
-            <option value={11}>November</option>
-            <option value={12}>December</option>
-        </select>
+      <div>Adjust Start Month</div>
+      <select
+        id="month"
+        value={startMonth}
+        onChange={(e) =>
+          handleChangeMonthStart(parseInt(e.currentTarget.value))
+
+        }
+        required
+        className="inputBox"
+      >
+        {data &&
+          data.map((num, index) => (
+            <option key={index} value={index}>
+            {num.monthName}
+            </option>
+          ))}
+        {/*<option value={1}>January</option>*/}
+        {/*<option value={2}>February</option>*/}
+        {/*<option value={3}>March</option>*/}
+        {/*<option value={4}>April</option>*/}
+        {/*<option value={5}>May</option>*/}
+        {/*<option value={6}>June</option>*/}
+        {/*<option value={7}>July</option>*/}
+        {/*<option value={8}>August</option>*/}
+        {/*<option value={9}>September</option>*/}
+        {/*<option value={10}>October</option>*/}
+        {/*<option value={11}>November</option>*/}
+        {/*<option value={12}>December</option>*/}
+      </select>
       <div className="App">
         {menu === false && (
           <div onClick={() => setMenu(true)} className="openTab">
@@ -251,13 +274,11 @@ const Container = () => {
               handleAdditionContribution={handleAdditionContribution}
               setStartMonth={setStartMonth}
               setMonthlyContribution={setMonthlyContribution}
-
             />
           </section>
         )}
         <MonthList
           data={data}
-          startMonth={startMonth}
           monthlyContribution={monthlyContribution}
           handleRemoveContribution={handleRemoveContribution}
           handleUpdate={handleUpdate}

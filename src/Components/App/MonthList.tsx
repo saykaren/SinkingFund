@@ -3,14 +3,12 @@ import { TestDataProps } from './Interface';
 
 interface MonthListProps {
   data: Array<TestDataProps>;
-  startMonth: number;
   monthlyContribution: number;
   handleRemoveContribution: (arg1: number, arg2: number) => void;
   handleUpdate: (arg1: number, arg2: number) => void;
 }
 const MonthList = ({
   data,
-  startMonth,
   monthlyContribution,
   handleRemoveContribution,
   handleUpdate,
@@ -22,10 +20,7 @@ const MonthList = ({
       <main className="mainSection">
         {data &&
           data.map((data, index) => (
-            <section
-              key={index}
-              className={data.monthId >= startMonth ? 'monthCard' : 'hidden'}
-            >
+            <section key={index} className="monthCard">
               <h2 className="cardTitle">{data.monthName}</h2>
               <div
                 className={
