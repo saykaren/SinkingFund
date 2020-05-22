@@ -19,7 +19,7 @@ export interface TestDataProps {
     monthContributions?: Array<monthContributionsProps>;
 }
 
-interface dataProps {
+export interface dataProps {
     data: Array<TestDataProps>
 }
 

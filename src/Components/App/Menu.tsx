@@ -1,5 +1,30 @@
 import React from 'react';
 
+interface monthDataProps {
+    title: string;
+    cost: number;
+    monthIN: number;
+}
+
+interface monthContributionsProps {
+    title: string;
+    contribution: number;
+    monthIN: number
+}
+
+export interface TestDataProps {
+    monthId: number;
+    monthName: string;
+    begBalance: number;
+    endBalance: number;
+    monthData?: Array<monthDataProps>;
+    monthContributions?: Array<monthContributionsProps>;
+}
+
+export interface dataProps {
+    data: Array<TestDataProps>
+}
+
 interface MenuProps {
   initialFunding: number;
   handleInitialInput: (arg1: number) => void;
@@ -48,6 +73,7 @@ const Menu = ({
   setOptionsConstState,
   handleAdditionContribution,
   setStartMonth,
+
 }: MenuProps) => {
   return (
     <>
@@ -196,27 +222,27 @@ const Menu = ({
                 Submit
               </button>
             )}
-            <div>Adjust Start Month</div>
-            <select
-              id="month"
-              value={optionsConstState}
-              onChange={(e) => setStartMonth(parseInt(e.currentTarget.value))}
-              required
-              className="inputBox"
-            >
-              <option value={1}>January</option>
-              <option value={2}>February</option>
-              <option value={3}>March</option>
-              <option value={4}>April</option>
-              <option value={5}>May</option>
-              <option value={6}>June</option>
-              <option value={7}>July</option>
-              <option value={8}>August</option>
-              <option value={9}>September</option>
-              <option value={10}>October</option>
-              <option value={11}>November</option>
-              <option value={12}>December</option>
-            </select>
+            {/*<div>Adjust Start Month</div>*/}
+            {/*<select*/}
+            {/*  id="month"*/}
+            {/*  value={optionsConstState}*/}
+            {/*  onChange={(e) => setStartMonth(parseInt(e.currentTarget.value))}*/}
+            {/*  required*/}
+            {/*  className="inputBox"*/}
+            {/*>*/}
+            {/*  <option value={1}>January</option>*/}
+            {/*  <option value={2}>February</option>*/}
+            {/*  <option value={3}>March</option>*/}
+            {/*  <option value={4}>April</option>*/}
+            {/*  <option value={5}>May</option>*/}
+            {/*  <option value={6}>June</option>*/}
+            {/*  <option value={7}>July</option>*/}
+            {/*  <option value={8}>August</option>*/}
+            {/*  <option value={9}>September</option>*/}
+            {/*  <option value={10}>October</option>*/}
+            {/*  <option value={11}>November</option>*/}
+            {/*  <option value={12}>December</option>*/}
+            {/*</select>*/}
           </label>
         </div>
       </section>
