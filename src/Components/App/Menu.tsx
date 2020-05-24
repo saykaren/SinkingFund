@@ -1,29 +1,31 @@
 import React from 'react';
+import { TestDataProps } from './Interface';
+import Selector from './Selector';
 
-interface monthDataProps {
-    title: string;
-    cost: number;
-    monthIN: number;
-}
+// interface monthDataProps {
+//     title: string;
+//     cost: number;
+//     monthIN: number;
+// }
+//
+// interface monthContributionsProps {
+//     title: string;
+//     contribution: number;
+//     monthIN: number
+// }
+//
+// export interface TestDataProps {
+//     monthId: number;
+//     monthName: string;
+//     begBalance: number;
+//     endBalance: number;
+//     monthData?: Array<monthDataProps>;
+//     monthContributions?: Array<monthContributionsProps>;
+// }
 
-interface monthContributionsProps {
-    title: string;
-    contribution: number;
-    monthIN: number
-}
-
-export interface TestDataProps {
-    monthId: number;
-    monthName: string;
-    begBalance: number;
-    endBalance: number;
-    monthData?: Array<monthDataProps>;
-    monthContributions?: Array<monthContributionsProps>;
-}
-
-export interface dataProps {
-    data: Array<TestDataProps>
-}
+// export interface dataProps {
+//     data: Array<TestDataProps>
+// }
 
 interface MenuProps {
   initialFunding: number;
@@ -74,8 +76,7 @@ const Menu = ({
   setOptionsConstState,
   handleAdditionContribution,
   setStartMonth,
-    data,
-
+  data,
 }: MenuProps) => {
   return (
     <>
@@ -138,98 +139,41 @@ const Menu = ({
               className="inputBox"
             >
               {data &&
-              data.map((num, index) => (
+                data.map((num, index) => (
                   <option key={index} value={index}>
                     {num.monthName}
                   </option>
-              ))}
+                ))}
             </select>
-            {optionsState !== undefined &&
-              costAmount > 0 && (
-                <button
-                  className="submit"
-                  onClick={() =>
-                    handleAdditionExpense(
-                      costTitle,
-                      costAmount,
-                      optionsState.valueOf(),
-                    )
-                  }
-                >
-                  Submit
-                </button>
-              )}
-          </label>
-        </div>
-        <div className="inputLabel">
-          <label className="inputSection">
-            Single Contribution:
-            <input
-              type="text"
-              value={contributionTitle}
-              onChange={(e) => setContributionTitle(e.currentTarget.value)}
-              placeholder="Name of Contribution"
-              className="inputBox"
-            ></input>
-            <input
-              type="number"
-              value={contributionAmount}
-              onChange={(e) =>
-                setContributionAmount(parseFloat(e.currentTarget.value))
-              }
-              className="inputBox"
-            ></input>
-            <select
-              id="month"
-              value={optionsConstState}
-              onChange={(e) =>
-                setOptionsConstState(parseInt(e.currentTarget.value))
-              }
-              required
-              className="inputBox"
-            >
-              {data &&
-              data.map((num, index) => (
-                  <option key={index} value={index}>
-                    {num.monthName}
-                  </option>
-              ))}
-            </select>
-            {optionsConstState !== undefined && contributionAmount > 0 && (
+            {optionsState !== undefined && costAmount > 0 && (
               <button
                 className="submit"
                 onClick={() =>
-                  handleAdditionContribution(
-                    contributionTitle,
-                    contributionAmount,
-                      optionsConstState.valueOf(),
+                  handleAdditionExpense(
+                    costTitle,
+                    costAmount,
+                    optionsState.valueOf(),
                   )
                 }
               >
                 Submit
               </button>
             )}
-            {/*<div>Adjust Start Month</div>*/}
-            {/*<select*/}
-            {/*  id="month"*/}
-            {/*  value={optionsConstState}*/}
-            {/*  onChange={(e) => setStartMonth(parseInt(e.currentTarget.value))}*/}
-            {/*  required*/}
-            {/*  className="inputBox"*/}
-            {/*>*/}
-            {/*  <option value={1}>January</option>*/}
-            {/*  <option value={2}>February</option>*/}
-            {/*  <option value={3}>March</option>*/}
-            {/*  <option value={4}>April</option>*/}
-            {/*  <option value={5}>May</option>*/}
-            {/*  <option value={6}>June</option>*/}
-            {/*  <option value={7}>July</option>*/}
-            {/*  <option value={8}>August</option>*/}
-            {/*  <option value={9}>September</option>*/}
-            {/*  <option value={10}>October</option>*/}
-            {/*  <option value={11}>November</option>*/}
-            {/*  <option value={12}>December</option>*/}
-            {/*</select>*/}
+          </label>
+        </div>
+        <div className="inputLabel">
+          <label className="inputSection">
+            <Selector
+              inputTitle={'Single Contribution:'}
+              titleState={contributionTitle}
+              setTitleState={setContributionTitle}
+              contributionAmount={contributionAmount}
+              setContributionAmount={setContributionAmount}
+              optionsConstState={optionsConstState}
+              setOptionsConstState={setOptionsConstState}
+              data={data}
+              handleFunction={handleAdditionContribution}
+            />
           </label>
         </div>
       </section>
