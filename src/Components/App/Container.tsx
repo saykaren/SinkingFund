@@ -74,16 +74,34 @@ const Container = () => {
     }
   };
 
+  // const handleAdditionExpense = (
+  //   costTitle: string,
+  //   costAmount: number,
+  //   optionsState: number,
+  // ) => {
+  //   let object = [...data];
+  //   object[optionsState - 1].monthData.push({
+  //     title: costTitle,
+  //     cost: costAmount,
+  //     monthIN: optionsState,
+  //   });
+  //   handleUpdateDataState();
+  // };
+
   const handleAdditionExpense = (
     costTitle: string,
     costAmount: number,
-    optionsState: number,
+    // optionsState: string,
+    event: string,
   ) => {
     let object = [...data];
-    object[optionsState - 1].monthData.push({
+    const index = parseInt(event);
+    console.log({ object });
+    console.log({ index });
+    object[index].monthData.push({
       title: costTitle,
       cost: costAmount,
-      monthIN: optionsState,
+      monthIN: object[index].monthId,
     });
     handleUpdateDataState();
   };
@@ -94,7 +112,7 @@ const Container = () => {
     optionsConstState: number,
   ) => {
     let object = [...data];
-    object[optionsConstState - 1].monthContributions.push({
+    object[optionsConstState].monthContributions.push({
       title: contributionTitle,
       contribution: contributionAmount,
       monthIN: optionsConstState,
@@ -167,7 +185,7 @@ const Container = () => {
         //   sumMonthlyCost(index, object[index].begBalance);
         // }
         if (index !== 0) {
-            console.log(`going through ${number.monthName} month`);
+          console.log(`going through ${number.monthName} month`);
           /// 1 index for February
           object[index].begBalance = object[index - 1].endBalance;
           sumMonthlyCost(index, object[index].begBalance);
@@ -183,12 +201,12 @@ const Container = () => {
   };
 
   const handleChangeMonthStart = (event: number) => {
-      console.log(event);
+    console.log(event);
     const currentData = [...data];
-      currentData.slice(0, event);
-      currentData.splice(0, event).map((num, index) => currentData.push(num));
-      console.log({ currentData });
-      setData(currentData);
+    currentData.slice(0, event);
+    currentData.splice(0, event).map((num, index) => currentData.push(num));
+    console.log({ currentData });
+    setData(currentData);
   };
 
   return (
@@ -217,7 +235,6 @@ const Container = () => {
         value={startMonth}
         onChange={(e) =>
           handleChangeMonthStart(parseInt(e.currentTarget.value))
-
         }
         required
         className="inputBox"
@@ -225,22 +242,11 @@ const Container = () => {
         {data &&
           data.map((num, index) => (
             <option key={index} value={index}>
-            {num.monthName}
+              {num.monthName}
             </option>
           ))}
-        {/*<option value={1}>January</option>*/}
-        {/*<option value={2}>February</option>*/}
-        {/*<option value={3}>March</option>*/}
-        {/*<option value={4}>April</option>*/}
-        {/*<option value={5}>May</option>*/}
-        {/*<option value={6}>June</option>*/}
-        {/*<option value={7}>July</option>*/}
-        {/*<option value={8}>August</option>*/}
-        {/*<option value={9}>September</option>*/}
-        {/*<option value={10}>October</option>*/}
-        {/*<option value={11}>November</option>*/}
-        {/*<option value={12}>December</option>*/}
       </select>
+      <button onClick={(e) => handleUpdateDataState()}>Recalculate</button>
       <div className="App">
         {menu === false && (
           <div onClick={() => setMenu(true)} className="openTab">
@@ -274,6 +280,7 @@ const Container = () => {
               handleAdditionContribution={handleAdditionContribution}
               setStartMonth={setStartMonth}
               setMonthlyContribution={setMonthlyContribution}
+              data={data}
             />
           </section>
         )}

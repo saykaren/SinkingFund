@@ -14,7 +14,7 @@ interface ModalProps {
   setCostAmount: (arg1: number) => void;
   optionsState: string;
   setOptionsState: (arg1: string) => void;
-  handleAdditionExpense: (arg1: string, arg2: number, arg3: number) => void;
+  handleAdditionExpense: (arg1: string, arg2: number, arg3: string) => void;
 }
 const Modal = ({
   setModal,
@@ -240,7 +240,7 @@ const Modal = ({
                             handleAdditionExpense(
                               costTitle,
                               costAmount,
-                              parseInt(optionsState),
+                              optionsState,
                             )
                           }
                         >

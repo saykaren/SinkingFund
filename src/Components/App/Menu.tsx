@@ -37,7 +37,7 @@ interface MenuProps {
   setCostAmount: (arg1: number) => void;
   optionsState: string;
   setOptionsState: (arg1: string) => void;
-  handleAdditionExpense: (arg1: string, arg2: number, arg3: number) => void;
+  handleAdditionExpense: (arg1: string, arg2: number, arg3: string) => void;
   contributionTitle: string;
   setContributionTitle: (arg1: string) => void;
   contributionAmount: number;
@@ -50,6 +50,7 @@ interface MenuProps {
     arg3: number,
   ) => void;
   setStartMonth: (arg1: number) => void;
+  data: Array<TestDataProps>;
 }
 
 const Menu = ({
@@ -73,6 +74,7 @@ const Menu = ({
   setOptionsConstState,
   handleAdditionContribution,
   setStartMonth,
+    data,
 
 }: MenuProps) => {
   return (
@@ -135,22 +137,14 @@ const Menu = ({
               required
               className="inputBox"
             >
-              <option value={0}>SELECT ONE</option>
-              <option value={1}>January</option>
-              <option value={2}>February</option>
-              <option value={3}>March</option>
-              <option value={4}>April</option>
-              <option value={5}>May</option>
-              <option value={6}>June</option>
-              <option value={7}>July</option>
-              <option value={8}>August</option>
-              <option value={9}>September</option>
-              <option value={10}>October</option>
-              <option value={11}>November</option>
-              <option value={12}>December</option>
+              {data &&
+              data.map((num, index) => (
+                  <option key={index} value={index}>
+                    {num.monthName}
+                  </option>
+              ))}
             </select>
             {optionsState !== undefined &&
-              parseInt(optionsState) > 0 &&
               costAmount > 0 && (
                 <button
                   className="submit"
@@ -158,7 +152,7 @@ const Menu = ({
                     handleAdditionExpense(
                       costTitle,
                       costAmount,
-                      parseInt(optionsState),
+                      optionsState.valueOf(),
                     )
                   }
                 >
@@ -194,19 +188,12 @@ const Menu = ({
               required
               className="inputBox"
             >
-              <option value={0}>SELECT ONE</option>
-              <option value={1}>January</option>
-              <option value={2}>February</option>
-              <option value={3}>March</option>
-              <option value={4}>April</option>
-              <option value={5}>May</option>
-              <option value={6}>June</option>
-              <option value={7}>July</option>
-              <option value={8}>August</option>
-              <option value={9}>September</option>
-              <option value={10}>October</option>
-              <option value={11}>November</option>
-              <option value={12}>December</option>
+              {data &&
+              data.map((num, index) => (
+                  <option key={index} value={index}>
+                    {num.monthName}
+                  </option>
+              ))}
             </select>
             {optionsConstState !== undefined && contributionAmount > 0 && (
               <button
@@ -215,7 +202,7 @@ const Menu = ({
                   handleAdditionContribution(
                     contributionTitle,
                     contributionAmount,
-                    optionsConstState,
+                      optionsConstState.valueOf(),
                   )
                 }
               >
