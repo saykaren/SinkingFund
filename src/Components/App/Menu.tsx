@@ -1,31 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TestDataProps } from './Interface';
 import Selector from './Selector';
-
-// interface monthDataProps {
-//     title: string;
-//     cost: number;
-//     monthIN: number;
-// }
-//
-// interface monthContributionsProps {
-//     title: string;
-//     contribution: number;
-//     monthIN: number
-// }
-//
-// export interface TestDataProps {
-//     monthId: number;
-//     monthName: string;
-//     begBalance: number;
-//     endBalance: number;
-//     monthData?: Array<monthDataProps>;
-//     monthContributions?: Array<monthContributionsProps>;
-// }
-
-// export interface dataProps {
-//     data: Array<TestDataProps>
-// }
 
 interface MenuProps {
   initialFunding: number;
@@ -53,6 +28,14 @@ interface MenuProps {
   ) => void;
   setStartMonth: (arg1: number) => void;
   data: Array<TestDataProps>;
+  handleSelection: (
+    arg1: string,
+    arg2: number,
+    arg3: number,
+    arg4: string,
+  ) => void;
+  expenseSelection: number;
+  setExpenseSelection: (arg1: number) => void;
 }
 
 const Menu = ({
@@ -77,7 +60,11 @@ const Menu = ({
   handleAdditionContribution,
   setStartMonth,
   data,
+  expenseSelection,
+  setExpenseSelection,
+  handleSelection,
 }: MenuProps) => {
+
   return (
     <>
       <section className="inputSection">
@@ -117,48 +104,60 @@ const Menu = ({
         </div>
         <div className="inputLabel">
           <label className="inputSection">
-            Expense:
-            <input
-              type="text"
-              value={costTitle}
-              onChange={(e) => setCostTitle(e.currentTarget.value)}
-              placeholder="Name of Expense"
-              className="inputBox"
-            ></input>
-            <input
-              type="number"
-              value={costAmount}
-              onChange={(e) => setCostAmount(parseFloat(e.currentTarget.value))}
-              className="inputBox"
-            ></input>
-            <select
-              id="month"
-              value={optionsState}
-              onChange={(e) => setOptionsState(e.currentTarget.value)}
-              required
-              className="inputBox"
-            >
-              {data &&
-                data.map((num, index) => (
-                  <option key={index} value={index}>
-                    {num.monthName}
-                  </option>
-                ))}
-            </select>
-            {optionsState !== undefined && costAmount > 0 && (
-              <button
-                className="submit"
-                onClick={() =>
-                  handleAdditionExpense(
-                    costTitle,
-                    costAmount,
-                    optionsState.valueOf(),
-                  )
-                }
-              >
-                Submit
-              </button>
-            )}
+            <Selector
+              inputTitle={'Expense:'}
+              titleState={costTitle}
+              setTitleState={setCostTitle}
+              amount={costAmount}
+              setAmount={setCostAmount}
+              optionsState={expenseSelection}
+              setOptionsState={setExpenseSelection}
+              data={data}
+              handleFunction={handleSelection}
+              type={'expense'}
+            />
+            {/*Expense:*/}
+            {/*<input*/}
+            {/*  type="text"*/}
+            {/*  value={costTitle}*/}
+            {/*  onChange={(e) => setCostTitle(e.currentTarget.value)}*/}
+            {/*  placeholder="Name of Expense"*/}
+            {/*  className="inputBox"*/}
+            {/*></input>*/}
+            {/*<input*/}
+            {/*  type="number"*/}
+            {/*  value={costAmount}*/}
+            {/*  onChange={(e) => setCostAmount(parseFloat(e.currentTarget.value))}*/}
+            {/*  className="inputBox"*/}
+            {/*></input>*/}
+            {/*<select*/}
+            {/*  id="month"*/}
+            {/*  value={optionsState}*/}
+            {/*  onChange={(e) => setOptionsState(e.currentTarget.value)}*/}
+            {/*  required*/}
+            {/*  className="inputBox"*/}
+            {/*>*/}
+            {/*  {data &&*/}
+            {/*    data.map((num, index) => (*/}
+            {/*      <option key={index} value={index}>*/}
+            {/*        {num.monthName}*/}
+            {/*      </option>*/}
+            {/*    ))}*/}
+            {/*</select>*/}
+            {/*{optionsState !== undefined && costAmount > 0 && (*/}
+            {/*  <button*/}
+            {/*    className="submit"*/}
+            {/*    onClick={() =>*/}
+            {/*      handleAdditionExpense(*/}
+            {/*        costTitle,*/}
+            {/*        costAmount,*/}
+            {/*        optionsState.valueOf(),*/}
+            {/*      )*/}
+            {/*    }*/}
+            {/*  >*/}
+            {/*    Submit*/}
+            {/*  </button>*/}
+            {/*)}*/}
           </label>
         </div>
         <div className="inputLabel">
@@ -167,12 +166,13 @@ const Menu = ({
               inputTitle={'Single Contribution:'}
               titleState={contributionTitle}
               setTitleState={setContributionTitle}
-              contributionAmount={contributionAmount}
-              setContributionAmount={setContributionAmount}
-              optionsConstState={optionsConstState}
-              setOptionsConstState={setOptionsConstState}
+              amount={contributionAmount}
+              setAmount={setContributionAmount}
+              optionsState={optionsConstState}
+              setOptionsState={setOptionsConstState}
               data={data}
-              handleFunction={handleAdditionContribution}
+              handleFunction={handleSelection}
+              type={'contribution'}
             />
           </label>
         </div>

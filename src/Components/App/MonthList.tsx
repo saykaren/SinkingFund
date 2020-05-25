@@ -4,17 +4,18 @@ import { TestDataProps } from './Interface';
 interface MonthListProps {
   data: Array<TestDataProps>;
   monthlyContribution: number;
-  handleRemoveContribution: (arg1: number, arg2: number) => void;
-  handleUpdate: (arg1: number, arg2: number) => void;
+  handleRemoval: (
+    arg1: number,
+    arg2: number,
+    arg3: number,
+    arg4: string,
+  ) => void;
 }
 const MonthList = ({
   data,
   monthlyContribution,
-  handleRemoveContribution,
-  handleUpdate,
+  handleRemoval,
 }: MonthListProps) => {
-  console.log({ data });
-
   return (
     <>
       <main className="mainSection">
@@ -58,12 +59,24 @@ const MonthList = ({
                   )}
 
                   {data.monthContributions &&
-                    data.monthContributions.map((data, index) => (
-                      <div key={index}>
-                        {data.title} ${data.contribution}
+                    data.monthContributions.map((data, lineIndex) => (
+                      <div key={lineIndex}>
+                        {data.title} ${data.contribution} {lineIndex} {index}
+                        {/*<button*/}
+                        {/*  onClick={() =>*/}
+                        {/*    handleRemoveContribution(data.monthIN, index, lineIndex)*/}
+                        {/*  }*/}
+                        {/*>*/}
+                        {/*  X*/}
+                        {/*</button>*/}
                         <button
                           onClick={() =>
-                            handleRemoveContribution(data.monthIN, index)
+                            handleRemoval(
+                              data.monthIN,
+                              index,
+                              lineIndex,
+                              'contribution',
+                            )
                           }
                         >
                           X
@@ -74,12 +87,19 @@ const MonthList = ({
                 {data.monthData && (
                   <div className="monthExpenses">
                     <div className="monthHeader">Month Expenses</div>
-                    {data.monthData.map((data, index) => (
-                      <div key={index}>
+                    {data.monthData.map((data, lineIndex) => (
+                      <div key={lineIndex}>
                         {data.title} ${data.cost}
                         {data.monthIN && (
                           <button
-                            onClick={() => handleUpdate(data.monthIN, index)}
+                            onClick={() =>
+                              handleRemoval(
+                                data.monthIN,
+                                index,
+                                lineIndex,
+                                'expense',
+                              )
+                            }
                           >
                             X
                           </button>

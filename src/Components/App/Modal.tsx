@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import Selector from "./Selector";
+import SpecialSelector from './Selector';
+import {TestDataProps} from "./Interface";
 
 interface ModalProps {
   setModal: (arg1: boolean) => void;
@@ -12,9 +15,16 @@ interface ModalProps {
   setCostTitle: (arg1: string) => void;
   costAmount: number;
   setCostAmount: (arg1: number) => void;
-  optionsState: string;
-  setOptionsState: (arg1: string) => void;
+  optionsState: number;
+  setOptionsState: (arg1: number) => void;
   handleAdditionExpense: (arg1: string, arg2: number, arg3: string) => void;
+  data: Array<TestDataProps>;
+  handleSelection: (
+      arg1: string,
+      arg2: number,
+      arg3: number,
+      arg4: string,
+  ) => void;
 }
 const Modal = ({
   setModal,
@@ -31,6 +41,8 @@ const Modal = ({
   optionsState,
   setOptionsState,
   handleAdditionExpense,
+    data,
+                 handleSelection,
 }: ModalProps) => {
   const [knowSinking, setKnowSinking] = useState<string>('Select One');
   const [getStarted, setGetStarted] = useState<string>('Select One');
@@ -182,71 +194,18 @@ const Modal = ({
                         typical fees.
                       </p>
                     </details>
-                    <select
-                      id="text"
-                      value={costTitle}
-                      onChange={(e) => setCostTitle(e.currentTarget.value)}
-                      className="inputOption"
-                    >
-                      <option value={''}>SELECT ONE</option>
-                      <option value={'Auto Insurance'}>Auto Insurance</option>
-                      <option value={'Amazon'}>Amazon</option>
-                      <option value={'Costco / Sams Club'}>
-                        Costco / Sams Club
-                      </option>
-                      <option value={'Christmas'}>Christmas</option>
-                      <option value={'HOA Fees'}>HOA Fees</option>
-                      <option value={'Home Insurance'}>Home Insurance</option>
-                      <option value={'Life insurance'}>Life insurance</option>
-                      <option value={'Property Taxes'}>Property Taxes</option>
-                      <option value={'Vehicle Registration'}>
-                        Vehicle Registration
-                      </option>
-                    </select>
-                    <input
-                      type="number"
-                      value={costAmount}
-                      onChange={(e) =>
-                        setCostAmount(parseFloat(e.currentTarget.value))
-                      }
-                      className="inputBox"
-                    ></input>
-                    <select
-                      value={optionsState}
-                      onChange={(e) => setOptionsState(e.currentTarget.value)}
-                      required
-                      className="inputOption"
-                    >
-                      <option value={0}>SELECT ONE</option>
-                      <option value={1}>January</option>
-                      <option value={2}>February</option>
-                      <option value={3}>March</option>
-                      <option value={4}>April</option>
-                      <option value={5}>May</option>
-                      <option value={6}>June</option>
-                      <option value={7}>July</option>
-                      <option value={8}>August</option>
-                      <option value={9}>September</option>
-                      <option value={10}>October</option>
-                      <option value={11}>November</option>
-                      <option value={12}>December</option>
-                    </select>
-                    {optionsState !== undefined &&
-                      parseInt(optionsState) > 0 &&
-                      costAmount > 0 && (
-                        <button
-                          className="submit"
-                          onClick={() =>
-                            handleAdditionExpense(
-                              costTitle,
-                              costAmount,
-                              optionsState,
-                            )
-                          }
-                        >
-                          Submit
-                        </button>
-                      )}
+                    <SpecialSelector inputTitle={'Expense test'}
+                                     titleState={costTitle}
+                                     setTitleState={setCostTitle}
+                                     amount={costAmount}
+                                     setAmount={setCostAmount}
+                                     optionsState={optionsState}
+                                     setOptionsState={setOptionsState}
+                                     data={data}
+                                     handleFunction={handleSelection}
+                                     type={'expense'}
+                    />
+
                   </label>
                 </div>
               </div>

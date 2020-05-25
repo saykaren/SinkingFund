@@ -23,8 +23,10 @@ const Container = () => {
 
   const [optionsState, setOptionsState] = useState<string>('O');
   const [monthlyContribution, setMonthlyContribution] = useState<number>(0);
+  const [expenseSelection, setExpenseSelection] = useState<number>(0);
 
   const [menu, setMenu] = useState(true);
+  const [error, setError] = useState<boolean>(false);
 
   //Adjust starting month
   const [startMonth, setStartMonth] = useState(0);
@@ -54,18 +56,28 @@ const Container = () => {
     );
   });
 
-  const handleUpdate = (month: number, index: number) => {
+  const handleRemoval = (
+    month: number,
+    index: number,
+    lineIndex: number,
+    type: string,
+  ) => {
     let initialData = [...data];
-    initialData[month - 1].monthData.splice(index, 1);
-    setData(initialData);
-    handleUpdateDataState();
-  };
-
-  const handleRemoveContribution = (month: number, index: number) => {
-    let initialData = [...data];
-    initialData[month - 1].monthContributions.splice(index, 1);
-    setData(initialData);
-    handleUpdateDataState();
+    switch (true) {
+      case type === 'expense':
+        initialData[index].monthData.splice(lineIndex, 1);
+        setData(initialData);
+        handleUpdateDataState();
+        break;
+      case type === 'contribution':
+        initialData[index].monthContributions.splice(lineIndex, 1);
+        setData(initialData);
+        handleUpdateDataState();
+        break;
+      default:
+        setError(true);
+        break;
+    }
   };
 
   const handleInitialInput = (arg1: number) => {
@@ -74,30 +86,13 @@ const Container = () => {
     }
   };
 
-  // const handleAdditionExpense = (
-  //   costTitle: string,
-  //   costAmount: number,
-  //   optionsState: number,
-  // ) => {
-  //   let object = [...data];
-  //   object[optionsState - 1].monthData.push({
-  //     title: costTitle,
-  //     cost: costAmount,
-  //     monthIN: optionsState,
-  //   });
-  //   handleUpdateDataState();
-  // };
-
   const handleAdditionExpense = (
     costTitle: string,
     costAmount: number,
-    // optionsState: string,
     event: string,
   ) => {
     let object = [...data];
     const index = parseInt(event);
-    console.log({ object });
-    console.log({ index });
     object[index].monthData.push({
       title: costTitle,
       cost: costAmount,
@@ -106,6 +101,27 @@ const Container = () => {
     handleUpdateDataState();
   };
 
+  const handleSelection = (
+    title: string,
+    amount: number,
+    event: number,
+    section: string,
+  ) => {
+    let object = [...data];
+    const index = event;
+    section === 'expense'
+      ? object[index].monthData.push({
+          title: title,
+          cost: amount,
+          monthIN: object[index].monthId,
+        })
+      : object[index].monthContributions.push({
+          title: title,
+          contribution: amount,
+          monthIN: object[index].monthId,
+        });
+    handleUpdateDataState();
+  };
   const handleAdditionContribution = (
     contributionTitle: string,
     contributionAmount: number,
@@ -139,31 +155,15 @@ const Container = () => {
           },
           0,
         );
-        // monthIndex >= startMonth
-        //   ? (object[monthIndex].endBalance =
-        //       begBalance + +monthlyContribution + contribution - totalCost)
-        //   : (object[monthIndex].endBalance =
-        //       begBalance + contribution - totalCost);
         object[monthIndex].endBalance =
           begBalance + monthlyContribution + contribution - totalCost;
       };
 
-      // const januaryCosts = object[0].monthData.reduce(function(acc, num) {
-      //   return acc + num.cost;
-      // }, 0);
       const firstMonthCosts = object[0].monthData.reduce(function(acc, num) {
         return acc + num.cost;
       }, 0);
 
       //January settings
-      // const janContribution = object[0].monthContributions.reduce(function(
-      //   acc,
-      //   num,
-      // ) {
-      //   return acc + num.contribution;
-      // },
-      // 0);
-      //First Month settings
       const firstMonthContribution = object[0].monthContributions.reduce(
         function(acc, num) {
           return acc + num.contribution;
@@ -179,13 +179,7 @@ const Container = () => {
         firstMonthCosts;
 
       object.map((number, index) => {
-        // if (number.monthId !== 1) {
-        //   /// 1 index for February
-        //   object[index].begBalance = object[index - 1].endBalance;
-        //   sumMonthlyCost(index, object[index].begBalance);
-        // }
         if (index !== 0) {
-          console.log(`going through ${number.monthName} month`);
           /// 1 index for February
           object[index].begBalance = object[index - 1].endBalance;
           sumMonthlyCost(index, object[index].begBalance);
@@ -201,11 +195,9 @@ const Container = () => {
   };
 
   const handleChangeMonthStart = (event: number) => {
-    console.log(event);
     const currentData = [...data];
     currentData.slice(0, event);
     currentData.splice(0, event).map((num, index) => currentData.push(num));
-    console.log({ currentData });
     setData(currentData);
   };
 
@@ -224,9 +216,11 @@ const Container = () => {
           setCostTitle={setCostTitle}
           costAmount={costAmount}
           setCostAmount={setCostAmount}
-          optionsState={optionsState}
-          setOptionsState={setOptionsState}
+          optionsState={expenseSelection}
+          setOptionsState={setExpenseSelection}
           handleAdditionExpense={handleAdditionExpense}
+          handleSelection={handleSelection}
+          data={data}
         />
       )}
       <div>Adjust Start Month</div>
@@ -281,14 +275,16 @@ const Container = () => {
               setStartMonth={setStartMonth}
               setMonthlyContribution={setMonthlyContribution}
               data={data}
+              handleSelection={handleSelection}
+              expenseSelection={expenseSelection}
+              setExpenseSelection={setExpenseSelection}
             />
           </section>
         )}
         <MonthList
           data={data}
           monthlyContribution={monthlyContribution}
-          handleRemoveContribution={handleRemoveContribution}
-          handleUpdate={handleUpdate}
+          handleRemoval={handleRemoval}
         />
       </div>
       <button onClick={() => localStorage.clear()}>Clear Storage</button>
