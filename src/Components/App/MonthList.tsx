@@ -60,15 +60,9 @@ const MonthList = ({
 
                   {data.monthContributions &&
                     data.monthContributions.map((data, lineIndex) => (
-                      <div key={lineIndex}>
-                        {data.title} ${data.contribution} {lineIndex} {index}
-                        {/*<button*/}
-                        {/*  onClick={() =>*/}
-                        {/*    handleRemoveContribution(data.monthIN, index, lineIndex)*/}
-                        {/*  }*/}
-                        {/*>*/}
-                        {/*  X*/}
-                        {/*</button>*/}
+                      <div className="monthListDetails" key={lineIndex}>
+                        <span>{data.title}</span>
+                        <span>${data.contribution}</span>
                         <button
                           onClick={() =>
                             handleRemoval(
@@ -88,8 +82,9 @@ const MonthList = ({
                   <div className="monthExpenses">
                     <div className="monthHeader">Month Expenses</div>
                     {data.monthData.map((data, lineIndex) => (
-                      <div key={lineIndex}>
-                        {data.title} ${data.cost}
+                      <div className="monthListDetails" key={lineIndex}>
+                        <span>{data.title}</span>
+                        <span>${data.cost}</span>
                         {data.monthIN && (
                           <button
                             onClick={() =>

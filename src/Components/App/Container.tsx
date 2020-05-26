@@ -9,8 +9,7 @@ import Menu from './Menu';
 
 const Container = () => {
   const [data, setData] = useState(StartData);
-  console.log({ data });
-  //
+
   const [modal, setModal] = useState(true);
 
   //Input section
@@ -86,21 +85,6 @@ const Container = () => {
     }
   };
 
-  const handleAdditionExpense = (
-    costTitle: string,
-    costAmount: number,
-    event: string,
-  ) => {
-    let object = [...data];
-    const index = parseInt(event);
-    object[index].monthData.push({
-      title: costTitle,
-      cost: costAmount,
-      monthIN: object[index].monthId,
-    });
-    handleUpdateDataState();
-  };
-
   const handleSelection = (
     title: string,
     amount: number,
@@ -109,7 +93,7 @@ const Container = () => {
   ) => {
     let object = [...data];
     const index = event;
-    section === 'expense'
+    section === 'expense' || section === 'specialExpense'
       ? object[index].monthData.push({
           title: title,
           cost: amount,
@@ -120,19 +104,6 @@ const Container = () => {
           contribution: amount,
           monthIN: object[index].monthId,
         });
-    handleUpdateDataState();
-  };
-  const handleAdditionContribution = (
-    contributionTitle: string,
-    contributionAmount: number,
-    optionsConstState: number,
-  ) => {
-    let object = [...data];
-    object[optionsConstState].monthContributions.push({
-      title: contributionTitle,
-      contribution: contributionAmount,
-      monthIN: optionsConstState,
-    });
     handleUpdateDataState();
   };
 
@@ -199,6 +170,10 @@ const Container = () => {
     currentData.slice(0, event);
     currentData.splice(0, event).map((num, index) => currentData.push(num));
     setData(currentData);
+    if (data === currentData) {
+      alert('yes');
+      handleUpdateDataState();
+    }
   };
 
   return (
@@ -207,7 +182,6 @@ const Container = () => {
         <Modal
           setModal={setModal}
           initialFunding={initialFunding}
-          setInitialFunding={setInitialFunding}
           handleInitialInput={handleInitialInput}
           handleUpdateDataState={handleUpdateDataState}
           monthlyContribution={monthlyContribution}
@@ -218,29 +192,10 @@ const Container = () => {
           setCostAmount={setCostAmount}
           optionsState={expenseSelection}
           setOptionsState={setExpenseSelection}
-          handleAdditionExpense={handleAdditionExpense}
           handleSelection={handleSelection}
           data={data}
         />
       )}
-      <div>Adjust Start Month</div>
-      <select
-        id="month"
-        value={startMonth}
-        onChange={(e) =>
-          handleChangeMonthStart(parseInt(e.currentTarget.value))
-        }
-        required
-        className="inputBox"
-      >
-        {data &&
-          data.map((num, index) => (
-            <option key={index} value={index}>
-              {num.monthName}
-            </option>
-          ))}
-      </select>
-      <button onClick={(e) => handleUpdateDataState()}>Recalculate</button>
       <div className="App">
         {menu === false && (
           <div onClick={() => setMenu(true)} className="openTab">
@@ -264,20 +219,20 @@ const Container = () => {
               setCostAmount={setCostAmount}
               optionsState={optionsState}
               setOptionsState={setOptionsState}
-              handleAdditionExpense={handleAdditionExpense}
               contributionTitle={contributionTitle}
               setContributionTitle={setContributionTitle}
               contributionAmount={contributionAmount}
               setContributionAmount={setContributionAmount}
               optionsConstState={optionsConstState}
               setOptionsConstState={setOptionsConstState}
-              handleAdditionContribution={handleAdditionContribution}
               setStartMonth={setStartMonth}
               setMonthlyContribution={setMonthlyContribution}
               data={data}
               handleSelection={handleSelection}
               expenseSelection={expenseSelection}
               setExpenseSelection={setExpenseSelection}
+              startMonth={startMonth}
+              handleChangeMonthStart={handleChangeMonthStart}
             />
           </section>
         )}

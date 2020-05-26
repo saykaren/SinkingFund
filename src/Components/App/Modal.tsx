@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import Selector from "./Selector";
-import SpecialSelector from './Selector';
-import {TestDataProps} from "./Interface";
+import Selector from './Selector';
+import { TestDataProps } from './Interface';
 
 interface ModalProps {
   setModal: (arg1: boolean) => void;
-  setInitialFunding: (arg1: number) => void;
   initialFunding: number;
   handleInitialInput: (arg1: number) => void;
   handleUpdateDataState: () => void;
@@ -17,18 +15,16 @@ interface ModalProps {
   setCostAmount: (arg1: number) => void;
   optionsState: number;
   setOptionsState: (arg1: number) => void;
-  handleAdditionExpense: (arg1: string, arg2: number, arg3: string) => void;
   data: Array<TestDataProps>;
   handleSelection: (
-      arg1: string,
-      arg2: number,
-      arg3: number,
-      arg4: string,
+    arg1: string,
+    arg2: number,
+    arg3: number,
+    arg4: string,
   ) => void;
 }
 const Modal = ({
   setModal,
-  setInitialFunding,
   initialFunding,
   handleInitialInput,
   handleUpdateDataState,
@@ -40,9 +36,8 @@ const Modal = ({
   setCostAmount,
   optionsState,
   setOptionsState,
-  handleAdditionExpense,
-    data,
-                 handleSelection,
+  data,
+  handleSelection,
 }: ModalProps) => {
   const [knowSinking, setKnowSinking] = useState<string>('Select One');
   const [getStarted, setGetStarted] = useState<string>('Select One');
@@ -194,18 +189,18 @@ const Modal = ({
                         typical fees.
                       </p>
                     </details>
-                    <SpecialSelector inputTitle={'Expense test'}
-                                     titleState={costTitle}
-                                     setTitleState={setCostTitle}
-                                     amount={costAmount}
-                                     setAmount={setCostAmount}
-                                     optionsState={optionsState}
-                                     setOptionsState={setOptionsState}
-                                     data={data}
-                                     handleFunction={handleSelection}
-                                     type={'expense'}
+                    <Selector
+                      inputTitle={'Expense test'}
+                      titleState={costTitle}
+                      setTitleState={setCostTitle}
+                      amount={costAmount}
+                      setAmount={setCostAmount}
+                      optionsState={optionsState}
+                      setOptionsState={setOptionsState}
+                      data={data}
+                      handleFunction={handleSelection}
+                      type={'specialExpense'}
                     />
-
                   </label>
                 </div>
               </div>

@@ -14,18 +14,12 @@ interface MenuProps {
   setCostAmount: (arg1: number) => void;
   optionsState: string;
   setOptionsState: (arg1: string) => void;
-  handleAdditionExpense: (arg1: string, arg2: number, arg3: string) => void;
   contributionTitle: string;
   setContributionTitle: (arg1: string) => void;
   contributionAmount: number;
   setContributionAmount: (arg1: number) => void;
   optionsConstState: number;
   setOptionsConstState: (arg1: number) => void;
-  handleAdditionContribution: (
-    arg1: string,
-    arg2: number,
-    arg3: number,
-  ) => void;
   setStartMonth: (arg1: number) => void;
   data: Array<TestDataProps>;
   handleSelection: (
@@ -36,6 +30,8 @@ interface MenuProps {
   ) => void;
   expenseSelection: number;
   setExpenseSelection: (arg1: number) => void;
+  startMonth: number;
+  handleChangeMonthStart: (arg1: number) => void;
 }
 
 const Menu = ({
@@ -50,21 +46,20 @@ const Menu = ({
   setCostAmount,
   optionsState,
   setOptionsState,
-  handleAdditionExpense,
   contributionTitle,
   setContributionTitle,
   contributionAmount,
   setContributionAmount,
   optionsConstState,
   setOptionsConstState,
-  handleAdditionContribution,
+  startMonth,
   setStartMonth,
   data,
   expenseSelection,
   setExpenseSelection,
   handleSelection,
+  handleChangeMonthStart,
 }: MenuProps) => {
-
   return (
     <>
       <section className="inputSection">
@@ -96,7 +91,7 @@ const Menu = ({
               className="inputBox"
             ></input>
             {monthlyContribution > 0 && (
-              <button onClick={(e) => handleUpdateDataState()}>
+              <button onClick={() => handleUpdateDataState()}>
                 Apply Contribution
               </button>
             )}
@@ -116,48 +111,6 @@ const Menu = ({
               handleFunction={handleSelection}
               type={'expense'}
             />
-            {/*Expense:*/}
-            {/*<input*/}
-            {/*  type="text"*/}
-            {/*  value={costTitle}*/}
-            {/*  onChange={(e) => setCostTitle(e.currentTarget.value)}*/}
-            {/*  placeholder="Name of Expense"*/}
-            {/*  className="inputBox"*/}
-            {/*></input>*/}
-            {/*<input*/}
-            {/*  type="number"*/}
-            {/*  value={costAmount}*/}
-            {/*  onChange={(e) => setCostAmount(parseFloat(e.currentTarget.value))}*/}
-            {/*  className="inputBox"*/}
-            {/*></input>*/}
-            {/*<select*/}
-            {/*  id="month"*/}
-            {/*  value={optionsState}*/}
-            {/*  onChange={(e) => setOptionsState(e.currentTarget.value)}*/}
-            {/*  required*/}
-            {/*  className="inputBox"*/}
-            {/*>*/}
-            {/*  {data &&*/}
-            {/*    data.map((num, index) => (*/}
-            {/*      <option key={index} value={index}>*/}
-            {/*        {num.monthName}*/}
-            {/*      </option>*/}
-            {/*    ))}*/}
-            {/*</select>*/}
-            {/*{optionsState !== undefined && costAmount > 0 && (*/}
-            {/*  <button*/}
-            {/*    className="submit"*/}
-            {/*    onClick={() =>*/}
-            {/*      handleAdditionExpense(*/}
-            {/*        costTitle,*/}
-            {/*        costAmount,*/}
-            {/*        optionsState.valueOf(),*/}
-            {/*      )*/}
-            {/*    }*/}
-            {/*  >*/}
-            {/*    Submit*/}
-            {/*  </button>*/}
-            {/*)}*/}
           </label>
         </div>
         <div className="inputLabel">
@@ -174,6 +127,28 @@ const Menu = ({
               handleFunction={handleSelection}
               type={'contribution'}
             />
+          </label>
+        </div>
+        <div className="inputLabel">
+          <label className="inputSection">
+            <div>Adjust Start Month</div>
+            <select
+              id="month"
+              value={startMonth}
+              onChange={(e) =>
+                handleChangeMonthStart(parseInt(e.currentTarget.value))
+              }
+              required
+              className="inputBox"
+            >
+              {data &&
+                data.map((num, index) => (
+                  <option key={index} value={index}>
+                    {num.monthName}
+                  </option>
+                ))}
+            </select>
+            <button onClick={() => handleUpdateDataState()}>Recalculate</button>
           </label>
         </div>
       </section>
