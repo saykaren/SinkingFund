@@ -51,10 +51,12 @@ const MonthList = ({
                     (data.monthContributions &&
                       data.monthContributions.length > 0)) && (
                     <>
-                      <div className="monthHeader"> Month Contributions</div>
+                      <div className="monthHeader"> Month Contributions
+                        {" "}
                       {monthlyContribution > 0 && (
-                        <div>${monthlyContribution} </div>
+                        <span>${monthlyContribution} </span>
                       )}
+                      </div>
                     </>
                   )}
 
